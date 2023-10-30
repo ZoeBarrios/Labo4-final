@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UsersApi.Models.Role;
-using UsersApi.Models.User;
-using UsersApi.Models.User.Dto;
-using UsersApi.Services;
+using EcommerceAPI.Models.Role;
+using EcommerceAPI.Models.User;
+using EcommerceAPI.Models.User.Dto;
+using EcommerceAPI.Services;
 
 
 
-namespace UsersApi.Controllers
+namespace EcommerceAPI.Controllers
 {
     [Route("api/users")]
     [Authorize]
@@ -94,6 +94,7 @@ namespace UsersApi.Controllers
             if (!isAdmin)
             {
                 if (idToUpdate != idUser)
+
                 {
                     return Unauthorized();
                 }

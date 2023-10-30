@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Web.Http;
-using UsersApi.Models.Role;
-using UsersApi.Repositories;
+using EcommerceAPI.Models.Role;
+using EcommerceAPI.Repositories;
 
-namespace UsersApi.Services
+namespace EcommerceAPI.Services
 {
     public class RoleService
     {

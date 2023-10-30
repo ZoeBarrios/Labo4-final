@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using System.Net;
 using System.Web.Http;
-using UsersApi.Models.Role;
-using UsersApi.Models.User;
-using UsersApi.Models.User.Dto;
-using UsersApi.Repositories;
+using EcommerceAPI.Models.Role;
+using EcommerceAPI.Models.User;
+using EcommerceAPI.Models.User.Dto;
+using EcommerceAPI.Repositories;
 
-namespace UsersApi.Services
+namespace EcommerceAPI.Services
 {
     public class UserService
     {

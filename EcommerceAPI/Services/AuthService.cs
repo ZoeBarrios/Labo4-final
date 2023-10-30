@@ -2,9 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UsersApi.Models.User;
+using EcommerceAPI.Models.User;
 
-namespace UsersApi.Services
+namespace EcommerceAPI.Services
 {
     public class AuthService
     {

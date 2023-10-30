@@ -1,6 +1,6 @@
 ﻿
 
-namespace UsersApi.Models.User.Dto
+namespace EcommerceAPI.Models.User.Dto
 {
     public class UserDto
     {

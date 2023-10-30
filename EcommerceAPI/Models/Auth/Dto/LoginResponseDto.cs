@@ -1,4 +1,4 @@
-﻿namespace UsersApi.Models.Auth.Dto
+﻿namespace EcommerceAPI.Models.Auth.Dto
 {
     public class LoginResponseDto
     {

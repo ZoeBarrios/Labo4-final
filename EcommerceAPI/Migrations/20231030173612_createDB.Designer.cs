@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UsersApi.Services;
+using EcommerceAPI.Services;
 
 #nullable disable
 
-namespace UsersApi.Migrations
+namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231029212123_createDB")]
+    [Migration("20231030173612_createDB")]
     partial class createDB
     {
         /// <inheritdoc />
@@ -24,7 +24,74 @@ namespace UsersApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("UsersApi.Models.Role.Role", b =>
+            modelBuilder.Entity("EcommerceAPI.Models.Categories.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Electrónica"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Electrodomésticos"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Moda"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Hogar y Jardín"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Deportes y Fitness"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Belleza y Cuidado Personal"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Juguetes y Niños"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Libros,Música y Películas"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Coleccionables"
+                        });
+                });
+
+            modelBuilder.Entity("EcommerceAPI.Models.Role.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +126,7 @@ namespace UsersApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UsersApi.Models.Role.RoleUsers", b =>
+            modelBuilder.Entity("EcommerceAPI.Models.Role.RoleUsers", b =>
                 {
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -74,7 +141,7 @@ namespace UsersApi.Migrations
                     b.ToTable("RoleUsers");
                 });
 
-            modelBuilder.Entity("UsersApi.Models.User.User", b =>
+            modelBuilder.Entity("EcommerceAPI.Models.User.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,15 +173,15 @@ namespace UsersApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("UsersApi.Models.Role.RoleUsers", b =>
+            modelBuilder.Entity("EcommerceAPI.Models.Role.RoleUsers", b =>
                 {
-                    b.HasOne("UsersApi.Models.Role.Role", null)
+                    b.HasOne("EcommerceAPI.Models.Role.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersApi.Models.User.User", null)
+                    b.HasOne("EcommerceAPI.Models.User.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace UsersApi.Migrations
+namespace EcommerceAPI.Migrations
 {
     /// <inheritdoc />
     public partial class createDB : Migration
@@ -12,6 +12,19 @@ namespace UsersApi.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -66,6 +79,22 @@ namespace UsersApi.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Electrónica" },
+                    { 2, "Electrodomésticos" },
+                    { 3, "Moda" },
+                    { 4, "Hogar y Jardín" },
+                    { 5, "Deportes y Fitness" },
+                    { 6, "Belleza y Cuidado Personal" },
+                    { 7, "Juguetes y Niños" },
+                    { 8, "Libros,Música y Películas" },
+                    { 9, "Coleccionables" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -74,6 +103,12 @@ namespace UsersApi.Migrations
                     { 2, "User" },
                     { 3, "Moderator" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_Name",
+                table: "Category",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleUsers_UserId",
@@ -90,6 +125,9 @@ namespace UsersApi.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Category");
+
             migrationBuilder.DropTable(
                 name: "RoleUsers");
 

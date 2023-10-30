@@ -1,7 +1,7 @@
-﻿using UsersApi.Models.Role;
-using UsersApi.Services;
+﻿using EcommerceAPI.Models.Role;
+using EcommerceAPI.Services;
 
-namespace UsersApi.Repositories
+namespace EcommerceAPI.Repositories
 {
     public interface IRoleRepository : IRepository<Role>
     {

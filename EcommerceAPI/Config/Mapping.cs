@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using UsersApi.Models.User;
-using UsersApi.Models.User.Dto;
+using EcommerceAPI.Models.User;
+using EcommerceAPI.Models.User.Dto;
 
-namespace UsersApi.Config
+namespace EcommerceAPI.Config
 {
     public class Mapping : Profile
     {

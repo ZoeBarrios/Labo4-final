@@ -1,4 +1,4 @@
-﻿namespace UsersApi.Services
+﻿namespace EcommerceAPI.Services
 {
     public interface IEncoderService
     {

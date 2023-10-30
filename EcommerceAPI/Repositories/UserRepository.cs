@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Linq;
-using UsersApi.Models.User;
-using UsersApi.Services;
+using EcommerceAPI.Models.User;
+using EcommerceAPI.Services;
 
-namespace UsersApi.Repositories
+namespace EcommerceAPI.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {

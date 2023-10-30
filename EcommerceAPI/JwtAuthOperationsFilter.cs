@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace UsersApi
+namespace EcommerceAPI
 {
     public class JwtAuthOperationsFilter : IOperationFilter
     {

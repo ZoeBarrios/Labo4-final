@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using UsersApi.Models.Auth;
-using UsersApi.Models.Auth.Dto;
-using UsersApi.Models.Role;
-using UsersApi.Models.Role.Dto;
-using UsersApi.Models.User;
-using UsersApi.Models.User.Dto;
-using UsersApi.Services;
+using EcommerceAPI.Models.Auth;
+using EcommerceAPI.Models.Auth.Dto;
+using EcommerceAPI.Models.Role;
+using EcommerceAPI.Models.Role.Dto;
+using EcommerceAPI.Models.User;
+using EcommerceAPI.Models.User.Dto;
+using EcommerceAPI.Services;
 
-namespace UsersApi.Controllers
+namespace EcommerceAPI.Controllers
 {
     [Route("api/auth")]
     [ApiController]

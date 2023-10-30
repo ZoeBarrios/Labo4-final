@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using UsersApi.Services;
+using EcommerceAPI.Services;
 
-namespace UsersApi.Repositories
+namespace EcommerceAPI.Repositories
 {
 
     public interface IRepository<T> where T : class

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UsersApi.Models.Role.Dto
+namespace EcommerceAPI.Models.Role.Dto
 {
     public class UpdateUserRolesDto
     {

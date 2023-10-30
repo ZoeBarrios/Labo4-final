@@ -4,10 +4,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
-using UsersApi;
-using UsersApi.Config;
-using UsersApi.Repositories;
-using UsersApi.Services;
+using EcommerceAPI;
+using EcommerceAPI.Config;
+using EcommerceAPI.Repositories;
+using EcommerceAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
