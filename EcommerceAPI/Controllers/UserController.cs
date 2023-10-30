@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UsersApi.Models.Role;
+using UsersApi.Models.User;
 using UsersApi.Models.User.Dto;
 using UsersApi.Services;
 
@@ -46,7 +48,7 @@ namespace UsersApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin,Moderator")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserDto createUserDto)
         {
             if (!ModelState.IsValid)
@@ -60,16 +62,45 @@ namespace UsersApi.Controllers
 
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{idUser}/{idToUpdate:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-        public async Task<ActionResult<UserDto>> Put(int id, [FromBody] UpdateUserDto updateUserDto)
+
+        public async Task<ActionResult<UserDto>> Put(int idUser,int idToUpdate, [FromBody] UpdateUserDto updateUserDto)
         {
             try
             {
-                var userUpdated = await _userService.UpdateById(id, updateUserDto);
+                var user = await _userService.GetById(idUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            List<Role> roles = await _userService.GetRolesOfUserById(idUser);
+            bool isAdmin = false;
+
+            foreach (Role role in roles)
+            {
+                if (role.Name == "Admin")
+                {
+                    isAdmin = true;
+                    break;
+                }
+            }
+
+            if (!isAdmin)
+            {
+                if (idToUpdate != idUser)
+                {
+                    return Unauthorized();
+                }
+            }
+            try
+            {
+                var userUpdated = await _userService.UpdateById(idToUpdate, updateUserDto);
                 return Ok(userUpdated);
             }
             catch (Exception ex)
@@ -78,19 +109,47 @@ namespace UsersApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{idUser}/{idToDelete}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int idToDelete, int idUser)
         {
             try
             {
-                await _userService.DeleteById(id);
-                
+                var user = await _userService.GetById(idUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            List<Role> roles = await _userService.GetRolesOfUserById(idUser);
+            bool isAdmin = false;
+
+            foreach (Role role in roles)
+            {
+                if (role.Name == "Admin")
+                {
+                    isAdmin = true;
+                    break;
+                }
+            }
+
+            if (!isAdmin)
+            {
+                if (idToDelete != idUser)
+                {
+                    return Unauthorized();
+                }
+            }
+
+            try
+            {
+                await _userService.DeleteById(idToDelete);
                 return Ok(new
                 {
-                    message = $"User with Id = {id} was deleted"
+                    message = $"User with Id = {idToDelete} was deleted"
                 });
             }
             catch (Exception ex)
