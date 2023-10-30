@@ -23,12 +23,17 @@ namespace EcommerceAPI.Models.Purchase
         [ForeignKey("UserId")]
         public User.User User { get; set; } = null!;
 
-        [Required]
+
+        public List<Publication.Publication> Publications = null!;
+
+
+    }
+    class PurchasePublication
+    {
+        
         public int PublicationId { get; set; }
 
-        [ForeignKey("PublicationId")]
-        public Publication.Publication Publication { get; set; } = null!;
-
-
+        public int PurchaseId { get; set; }
+        
     }
 }

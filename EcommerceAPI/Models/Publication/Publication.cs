@@ -27,6 +27,8 @@ namespace EcommerceAPI.Models.Publication
 
         public DateTime CreatedAt = DateTime.Now;
 
+        public bool IsPaused = false;
+
         [Required]
         public int UserId { get; set; }
 

@@ -4,6 +4,7 @@ using EcommerceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030234019_agregando Estados")]
+    partial class agregandoEstados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,29 +175,19 @@ namespace EcommerceAPI.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<int>("PublicationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PublicationId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Purchases");
-                });
-
-            modelBuilder.Entity("EcommerceAPI.Models.Purchase.PurchasePublication", b =>
-                {
-                    b.Property<int>("PublicationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchaseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PublicationId", "PurchaseId");
-
-                    b.HasIndex("PurchaseId");
-
-                    b.ToTable("PurchasePublication");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Role.Role", b =>
@@ -345,28 +338,21 @@ namespace EcommerceAPI.Migrations
 
             modelBuilder.Entity("EcommerceAPI.Models.Purchase.Purchase", b =>
                 {
+                    b.HasOne("EcommerceAPI.Models.Publication.Publication", "Publication")
+                        .WithMany()
+                        .HasForeignKey("PublicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("EcommerceAPI.Models.User.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Publication");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("EcommerceAPI.Models.Purchase.PurchasePublication", b =>
-                {
-                    b.HasOne("EcommerceAPI.Models.Publication.Publication", null)
-                        .WithMany()
-                        .HasForeignKey("PublicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceAPI.Models.Purchase.Purchase", null)
-                        .WithMany()
-                        .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Role.RoleUsers", b =>

@@ -22,6 +22,8 @@ namespace EcommerceAPI.Models.User
         [MaxLength(128)]
         public string UserName { get; set; } = null!;
 
+        public bool IsActive { get; set; } = true;
+
         [Required]
         [MaxLength(128)]
         public string PhoneNumber { get; set; } = null!;
@@ -29,6 +31,7 @@ namespace EcommerceAPI.Models.User
         public List<Role.Role> Roles { get; set; } = null!;
 
         public List<Publication.Publication>? Publications { get; set; }
+
 
         public List<UserFavorite.UserFavorite>? UserFavorites { get; set; }  
     }

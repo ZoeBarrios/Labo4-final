@@ -10,6 +10,12 @@ namespace EcommerceAPI.Models.User.Dto
         [Required]
         [MinLength(6)]
         public string Password { get; set; } = null!;
+
+        [Required]
+        [MaxLength(128)]
+        public string PhoneNumber { get; set; } = null!;
+
+
         [Required]
         public string UserName { get; set; } = null!;
         [EmailAddress]

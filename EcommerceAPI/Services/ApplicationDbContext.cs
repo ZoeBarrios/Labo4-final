@@ -81,7 +81,13 @@ namespace EcommerceAPI.Services
                 r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
             );
 
-            
+
+            modelBuilder.Entity<Purchase>().HasMany(e => e.Publications).WithMany().UsingEntity<PurchasePublication>(
+                l => l.HasOne<Publication>().WithMany().HasForeignKey(e => e.PublicationId),
+                r => r.HasOne<Purchase>().WithMany().HasForeignKey(e => e.PurchaseId)
+            );
+
+
 
 
         }
