@@ -4,6 +4,7 @@ using EcommerceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030202259_CreandoDB")]
+    partial class CreandoDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,39 +92,6 @@ namespace EcommerceAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EcommerceAPI.Models.Comment.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PublicationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PublicationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("EcommerceAPI.Models.Publication.Publication", b =>
                 {
                     b.Property<int>("Id")
@@ -172,17 +142,17 @@ namespace EcommerceAPI.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<int>("PublicationId")
+                    b.Property<int>("BuyerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("PublicationId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PublicationId");
+                    b.HasIndex("BuyerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("PublicationId");
 
                     b.ToTable("Purchases");
                 });
@@ -277,40 +247,6 @@ namespace EcommerceAPI.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EcommerceAPI.Models.UserFavorite.UserFavorite", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PublicationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "PublicationId");
-
-                    b.HasIndex("PublicationId");
-
-                    b.ToTable("UserFavorites");
-                });
-
-            modelBuilder.Entity("EcommerceAPI.Models.Comment.Comment", b =>
-                {
-                    b.HasOne("EcommerceAPI.Models.Publication.Publication", "Publication")
-                        .WithMany()
-                        .HasForeignKey("PublicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceAPI.Models.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Publication");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("EcommerceAPI.Models.Publication.Publication", b =>
                 {
                     b.HasOne("EcommerceAPI.Models.Category.Category", "Category")
@@ -332,16 +268,16 @@ namespace EcommerceAPI.Migrations
 
             modelBuilder.Entity("EcommerceAPI.Models.Purchase.Purchase", b =>
                 {
+                    b.HasOne("EcommerceAPI.Models.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("EcommerceAPI.Models.Publication.Publication", "Publication")
                         .WithMany()
                         .HasForeignKey("PublicationId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceAPI.Models.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Publication");
@@ -364,30 +300,9 @@ namespace EcommerceAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EcommerceAPI.Models.UserFavorite.UserFavorite", b =>
-                {
-                    b.HasOne("EcommerceAPI.Models.Publication.Publication", "Publication")
-                        .WithMany()
-                        .HasForeignKey("PublicationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceAPI.Models.User.User", "User")
-                        .WithMany("UserFavorites")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Publication");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("EcommerceAPI.Models.User.User", b =>
                 {
                     b.Navigation("Publications");
-
-                    b.Navigation("UserFavorites");
                 });
 #pragma warning restore 612, 618
         }

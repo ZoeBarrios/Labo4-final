@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EcommerceAPI.Models.Publication;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcommerceAPI.Models.User
@@ -27,6 +28,8 @@ namespace EcommerceAPI.Models.User
 
         public List<Role.Role> Roles { get; set; } = null!;
 
-        public List<Publication.Publication>? Publications { get; set };
+        public List<Publication.Publication>? Publications { get; set; }
+
+        public List<UserFavorite.UserFavorite>? UserFavorites { get; set; }  
     }
 }

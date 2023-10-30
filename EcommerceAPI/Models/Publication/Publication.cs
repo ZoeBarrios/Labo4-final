@@ -20,7 +20,7 @@ namespace EcommerceAPI.Models.Publication
         public string Description { get; set; } = null!;
 
         [Required]
-        [Column(TypeName ="decimal(10,2)")]
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
 
         public int? Stock { get; set; } = 1;
@@ -43,14 +43,6 @@ namespace EcommerceAPI.Models.Publication
 
     }
 
-    class PublicationsBySeller
-    {
-        [Required]
-        public int UserId { get; set; }
+    
 
-        [Required]
-        public int PublicationId { get; set; }
-
-        
-    }
 }

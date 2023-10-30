@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using EcommerceAPI.Models.Role;
 using EcommerceAPI.Models.User;
 using EcommerceAPI.Models.Publication;
+using EcommerceAPI.Models.Purchase;
+using EcommerceAPI.Models.UserFavorite;
+using EcommerceAPI.Models.Comment;
 
 namespace EcommerceAPI.Services
 {
@@ -14,9 +17,15 @@ namespace EcommerceAPI.Services
      
         public DbSet<Role> Roles { get; set; }
 
-        public DbSet<Category> Category { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        public DbSet<Publication> Publication { get; set; }
+        public DbSet<Publication> Publications { get; set; }
+
+        public DbSet<Purchase> Purchases { get; set; }
+
+        public DbSet<UserFavorite> UserFavorites { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
 
         
 
@@ -42,15 +51,39 @@ namespace EcommerceAPI.Services
 
             );
 
+            modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Comment>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+            modelBuilder.Entity<UserFavorite>()
+            .HasKey(uf => new { uf.UserId, uf.PublicationId });
+
+
+            modelBuilder.Entity<UserFavorite>()
+            .HasOne(p => p.Publication)
+            .WithMany()
+            .HasForeignKey(p => p.PublicationId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+
             modelBuilder.Entity<User>().HasMany(e => e.Roles).WithMany().UsingEntity<RoleUsers>(
                 l => l.HasOne<Role>().WithMany().HasForeignKey(e => e.RoleId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
             );
 
-            modelBuilder.Entity<User>().HasMany(e => e.Publications).WithMany().UsingEntity<PublicationsBySeller>(
-                l => l.HasOne<Publication>().WithMany().HasForeignKey(e => e.PublicationId),
-                r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
-             );
+            
+
+
         }
     }
 }
