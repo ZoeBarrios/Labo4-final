@@ -32,7 +32,9 @@ namespace EcommerceAPI.Repositories
             if (filter != null)
             {
                 query = query.Where(filter).Include(u => u.Roles);
+                
             }
+            
             return await query.FirstOrDefaultAsync();
         }
     }

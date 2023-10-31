@@ -34,13 +34,12 @@ namespace EcommerceAPI.Services
         {
             var user = await _userRepo.GetOne(u => u.Id == id);
 
-            if (user == null)
+            if (user == null || user.IsActive==false)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
             
-
             var mapped = _mapper.Map<UserDto>(user);
 
             
@@ -50,15 +49,19 @@ namespace EcommerceAPI.Services
 
         public async Task<User> GetByUsernameOrEmail(string? username, string? email)
         {
-            User user;
+            var users = Enumerable.Empty<User>();
+
             if (email != null)
             {
-                user = await _userRepo.GetOne(u => u.Email == email);
+                users = await _userRepo.GetAll(u => u.Email == email);
             }
             else
             {
-                user = await _userRepo.GetOne(u => u.UserName == username);
+                users = await _userRepo.GetAll(u => u.UserName == username);
+                
             }
+
+            var user = (User)users.Where(u => u.IsActive).FirstOrDefault();
 
             return user;
         }
@@ -66,6 +69,9 @@ namespace EcommerceAPI.Services
         public async Task<UserDto> Create(CreateUserDto createUserDto)
         {
             var user = _mapper.Map<User>(createUserDto);
+
+            var users = await _userRepo.GetAll();
+            var usersFiltered = users.Where(u => u.IsActive == true && u.UserName==user.UserName);
 
             user.Password = _encoderService.Encode(user.Password);
 

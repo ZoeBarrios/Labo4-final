@@ -31,7 +31,7 @@ namespace EcommerceAPI.Services
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(u => u.UserName).IsUnique(unique: true);
+            
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique(unique: true);
             modelBuilder.Entity<Role>().HasData(
                 new Role { Id = 1, Name = "Admin" },

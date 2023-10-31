@@ -46,6 +46,7 @@ namespace EcommerceAPI.Controllers
 
                 var user = await _userService.GetByUsernameOrEmail(login.UserName, login.Email);
 
+
                 if (user == null || !_encoderService.Verify(login.Password, user.Password))
                 {
                     ModelState.AddModelError("Error", "Credentials are incorrect");

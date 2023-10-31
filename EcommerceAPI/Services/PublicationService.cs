@@ -22,16 +22,23 @@ namespace EcommerceAPI.Services
 
         public async Task<List<PublicationsDto>> GetAll()
         {
-
-            var lista = await _publicationRepository.GetAll();
-            return _mapper.Map<List<PublicationsDto>>(lista);
+            var lista = await _publicationRepository.GetAll(); 
+            var filteredList = lista.Where(p => !p.IsPaused).ToList(); 
+            return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
+
 
 
         public async Task<List<PublicationsDto>> GetAllByName(string name)
         {
+            var lista = await _publicationRepository.GetAll();
+            var filteredList = lista.Where(p=>p.Name.ToLower()==name.ToLower() && !p.IsPaused);
+            return _mapper.Map<List<PublicationsDto>>(filteredList);
+        }
 
-            var lista = await _publicationRepository.GetAll(p=>p.Name.ToLower()==name.ToLower());
+        public async Task<List<PublicationsDto>> GetAllByCategory(int idCategory)
+        {
+            var lista = await _publicationRepository.GetAll(p => p.CategoryId==idCategory);
             return _mapper.Map<List<PublicationsDto>>(lista);
         }
 
@@ -46,7 +53,7 @@ namespace EcommerceAPI.Services
         {
             Publication publication = await _publicationRepository.GetOne(u => u.Id == id);
 
-            if (publication == null || publication.IsPaused)
+            if (publication == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
