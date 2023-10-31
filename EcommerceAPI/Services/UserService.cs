@@ -5,6 +5,8 @@ using EcommerceAPI.Models.Role;
 using EcommerceAPI.Models.User;
 using EcommerceAPI.Models.User.Dto;
 using EcommerceAPI.Repositories;
+using EcommerceAPI.Models.Publication;
+using EcommerceAPI.Models.Publication.Dto;
 
 namespace EcommerceAPI.Services
 {
@@ -12,14 +14,12 @@ namespace EcommerceAPI.Services
     {
         private readonly IUserRepository _userRepo;
         private readonly IMapper _mapper;
-        
         private readonly IEncoderService _encoderService;
 
         public UserService(IUserRepository userRepo, IMapper mapper, IEncoderService encoderService)
         {
             _userRepo = userRepo;
-            _mapper = mapper;
-           
+            _mapper = mapper;           
             _encoderService = encoderService;
         }
 
@@ -126,5 +126,9 @@ namespace EcommerceAPI.Services
 
             return user.Roles.ToList();
         }
+
+        
+
+        
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using EcommerceAPI.Models.Role;
-using EcommerceAPI.Models.User;
 using EcommerceAPI.Models.User.Dto;
 using EcommerceAPI.Services;
 
@@ -15,6 +14,7 @@ namespace EcommerceAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly AuthService _authService;
         public UserController(UserService userService)
         {
             _userService = userService;
@@ -118,33 +118,12 @@ namespace EcommerceAPI.Controllers
         {
             try
             {
-                var user = await _userService.GetById(idUser);
-            }
-            catch (Exception ex)
+                await _authService.IsUserAuthorized(idUser, idToDelete);
+            }catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return Unauthorized();
             }
-
-            List<Role> roles = await _userService.GetRolesOfUserById(idUser);
-            bool isAdmin = false;
-
-            foreach (Role role in roles)
-            {
-                if (role.Name == "Admin")
-                {
-                    isAdmin = true;
-                    break;
-                }
-            }
-
-            if (!isAdmin)
-            {
-                if (idToDelete != idUser)
-                {
-                    return Unauthorized();
-                }
-            }
-
+            
             try
             {
                 await _userService.DeleteById(idToDelete);

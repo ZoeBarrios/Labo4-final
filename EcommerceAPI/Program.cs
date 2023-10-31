@@ -41,6 +41,7 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IEncoderService, EncoderService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<PublicationService>();
 // db
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -52,6 +53,7 @@ builder.Services.AddAutoMapper(typeof(Mapping));
 // repostories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IPublicationRepository,PublicationRepository>();
 
 // secret key
 var secretKey = builder.Configuration.GetSection("jwtSettings").GetSection("secretKey").ToString();
