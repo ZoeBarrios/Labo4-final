@@ -25,7 +25,8 @@ namespace EcommerceAPI.Services
 
         public async Task<List<UsersDto>> GetAll()
         {
-            var lista = await _userRepo.GetAll();
+
+            var lista = await _userRepo.GetAll(u=>u.IsActive==true);
             return _mapper.Map<List<UsersDto>>(lista);
         }
 
@@ -89,14 +90,14 @@ namespace EcommerceAPI.Services
 
         public async Task DeleteById(int id)
         {
-            var user = await _userRepo.GetOne(u => u.Id == id);
+            User user = await _userRepo.GetOne(u => u.Id == id);
 
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-
-            await _userRepo.Delete(user);
+            user.IsActive = false;
+            await _userRepo.Update(user);
         }
 
         
