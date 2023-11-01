@@ -14,7 +14,7 @@ namespace EcommerceAPI.Models.Purchase
         [Column(TypeName = "decimal(10,2)")]
         public decimal Amount { get; set; }
 
-        public DateTime PurchaseDate = DateTime.Now;
+        public DateTime PurchaseDate { get; set; } = DateTime.Now;
 
         [Required]
         public int UserId { get; set; }
@@ -28,7 +28,7 @@ namespace EcommerceAPI.Models.Purchase
 
 
     }
-    class PurchasePublication
+    public class PurchasePublication
     {
         
         public int PublicationId { get; set; }

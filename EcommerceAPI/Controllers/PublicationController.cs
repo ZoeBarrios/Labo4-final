@@ -59,7 +59,7 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<PublicationDto>> Post([FromBody] CreatePublicationDto createPublicationDto)
         {
             if (!ModelState.IsValid)
@@ -74,28 +74,17 @@ namespace EcommerceAPI.Controllers
         }
 
 
-        [HttpPut("{idUser}/{idToUpdate:int}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-
-
-        public async Task<ActionResult<PublicationDto>> Put(int idUser, int idToUpdate, [FromBody] UpdatePublicationDto updatePublicationDto)
+        [Authorize]
+        public async Task<ActionResult<PublicationDto>> Put(int id, [FromBody] UpdatePublicationDto updatePublicationDto)
         {
-            try
-            {
-                await authService.IsUserAuthorized(idUser, idToUpdate);
-
-
-            }catch(Exception ex)
-            {
-                return Unauthorized();
-            }
-
             
             try
             {
-                var updatedPublication = await _publicationService.UpdateById(idToUpdate, updatePublicationDto);
+                var updatedPublication = await _publicationService.UpdateById(id, updatePublicationDto);
                 return Ok(updatedPublication);
             }
             catch (Exception ex)

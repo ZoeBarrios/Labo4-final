@@ -27,6 +27,8 @@ namespace EcommerceAPI.Services
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<PurchasePublication> PurchasePublications { get; set; }
+
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EcommerceAPI.Models.Publication;
 using EcommerceAPI.Models.Publication.Dto;
-using EcommerceAPI.Models.User.Dto;
 using EcommerceAPI.Repositories;
 using System.Net;
 using System.Web.Http;
@@ -99,6 +98,18 @@ namespace EcommerceAPI.Services
             publication.IsPaused = true;
             await _publicationRepository.Update(publication);
         }
+
+        public async Task<List<Publication>> GetPublicationsByIds(List<int> publicationsIdS)
+        {
+            if (publicationsIdS == null || publicationsIdS.Count == 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+            var publications = await _publicationRepository.GetAll(p => publicationsIdS.Contains(p.Id));
+            return publications.ToList();
+        }
+
+
 
 
 

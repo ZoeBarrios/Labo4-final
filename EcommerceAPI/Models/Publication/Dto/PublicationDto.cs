@@ -13,7 +13,7 @@
 
         public int Stock { get; set; } 
 
-        public DateTime CreatedAt { get; }
+        public DateTime CreatedAt { get; set; }
 
         public bool IsPaused { get; }
 
