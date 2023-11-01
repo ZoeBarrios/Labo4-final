@@ -11,9 +11,11 @@ namespace EcommerceAPI.Services
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IMapper _mapper;
+        private string host;
 
-        public PublicationService(IPublicationRepository publicationRepository, IMapper mapper)
+        public PublicationService(IConfiguration config,IPublicationRepository publicationRepository, IMapper mapper)
         {
+            host = config.GetSection("hostUrl:url").Value;
             _publicationRepository = publicationRepository;
             _mapper = mapper;
         }
@@ -65,9 +67,23 @@ namespace EcommerceAPI.Services
             return mapped;
         }
 
-        public async Task<PublicationDto> Create(CreatePublicationDto createUserDto)
+        public async Task<PublicationDto> Create(CreatePublicationDto createPublicationDto)
         {
-            var publication = _mapper.Map<Publication>(createUserDto);
+            if (createPublicationDto.Image != null)
+            {
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + createPublicationDto.Image.FileName;
+                string baseUrl = host;
+                string imageUrl = baseUrl + "Images/" + uniqueFileName;
+
+                string imagePath = Path.Combine("Images", uniqueFileName);
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await createPublicationDto.Image.CopyToAsync(stream);
+                }
+
+                createPublicationDto.ImageUrl = imageUrl;
+            }
+            var publication = _mapper.Map<Publication>(createPublicationDto);
 
 
             await _publicationRepository.Add(publication);

@@ -57,18 +57,21 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
-        public async Task<ActionResult<PublicationDto>> Post([FromBody] CreatePublicationDto createPublicationDto)
+        public async Task<ActionResult<PublicationDto>> Post([FromForm] CreatePublicationDto createPublicationDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+
+           
+
             var publicationCreated = await _publicationService.Create(createPublicationDto);
 
             return Created("PublicationCreated", publicationCreated);
-
         }
+
 
 
         [HttpPut("{id}")]
@@ -90,6 +93,41 @@ namespace EcommerceAPI.Controllers
             }
         }
 
+        [HttpDelete("{idUser}/{idToDelete}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult> Delete(int idToDelete, int idUser)
+        {
+
+            try
+            {
+                await _publicationService.DeleteById(idToDelete);
+                return Ok(new
+                {
+                    message = $"Publication with Id = {idToDelete} was deleted"
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("Images/{imageName}")]
+        public IActionResult GetImage(string imageName)
+        {
+            var imagePath = Path.Combine("Images", imageName);
+            if (System.IO.File.Exists(imagePath))
+            {
+                var imageBytes = System.IO.File.ReadAllBytes(imagePath);
+                return File(imageBytes, "image/jpg"); 
+            }
+            return NotFound(); 
+        }
+
+
 
     }
+
 }

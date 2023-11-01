@@ -30,6 +30,9 @@ namespace EcommerceAPI.Models.Publication
         public bool IsPaused = false;
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]

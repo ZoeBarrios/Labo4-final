@@ -17,6 +17,7 @@
 
         public bool IsPaused { get; }
 
+        public string IMageUrl { get; set; } = null!;
  
         public int UserId { get; set; }
 
