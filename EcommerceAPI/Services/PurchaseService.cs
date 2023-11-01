@@ -23,17 +23,17 @@ namespace EcommerceAPI.Services
         }
 
 
-        public async Task<List<PurchasesDto>> GetAllByUserId(int id)
+        public async Task<List<PurchaseDto>> GetAllByUserId(int id)
         {
 
             var lista = await _purchaseRepository.GetAll(p => p.UserId == id);
             
-            return _mapper.Map<List<PurchasesDto>>(lista);
+            return _mapper.Map<List<PurchaseDto>>(lista);
         }
 
-        public async Task<PurchaseDto> GetOneById(int id)
+        public async Task<PurchaseDto> GetOneById(int UserId,int id)
         {
-            var purchase = await _purchaseRepository.GetOne(p => p.Id == id);
+            var purchase = await _purchaseRepository.GetOne(p => p.Id == id && p.UserId== UserId);
             return _mapper.Map<PurchaseDto>(purchase);
         }
 

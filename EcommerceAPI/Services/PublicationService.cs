@@ -31,7 +31,9 @@ namespace EcommerceAPI.Services
         public async Task<List<PublicationsDto>> GetAllByName(string name)
         {
             var lista = await _publicationRepository.GetAll();
-            var filteredList = lista.Where(p=>p.Name.ToLower()==name.ToLower() && !p.IsPaused);
+            var filteredList = lista.Where(p =>
+            p.Name.ToLower().Contains(name.ToLower()) && !p.IsPaused
+            ).ToList();
             return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
 

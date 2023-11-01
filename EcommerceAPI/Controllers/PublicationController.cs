@@ -30,7 +30,7 @@ namespace EcommerceAPI.Controllers
             return Ok(await _publicationService.GetAll());
         }
 
-        [HttpGet("{CategoryId}")]
+        [HttpGet("category/{CategoryId}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PublicationsDto>>> GetByCategory(int CategoryId)
@@ -39,21 +39,18 @@ namespace EcommerceAPI.Controllers
         }
 
 
-        [HttpGet("{id:int}")]
+
+        [HttpGet("name/{name}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PublicationDto>> Get(int id)
+        public async Task<ActionResult<PublicationsDto>> GetByName(string name)
         {
-            try
-            {
-                return Ok(await _publicationService.GetById(id));
-            }
-            catch
-            {
-                return NotFound(new { message = $"No publication with Id = {id}" });
-            }
+           
+            return Ok(await _publicationService.GetAllByName(name));
+          
         }
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

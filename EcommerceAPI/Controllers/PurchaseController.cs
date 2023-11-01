@@ -43,5 +43,19 @@ namespace EcommerceAPI.Controllers
             return Created("PurchaseCreated", UpdatePurchase);
 
         }
+
+        [HttpGet("{UserId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetByUserId(int UserId)
+        {
+            return Ok(await _purchaseService.GetAllByUserId(UserId));
+        }
+
+        [HttpGet("{UserId}/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PurchaseDto>> GetOneById(int UserId,int id)
+        {
+            return Ok(await _purchaseService.GetOneById(UserId,id));
+        }
     }
 }
