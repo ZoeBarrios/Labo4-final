@@ -45,6 +45,7 @@ builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<PublicationService>();
 builder.Services.AddScoped<PurchaseService>();
 builder.Services.AddScoped<CommentsService>();
+builder.Services.AddScoped<UserFavoriteService>();
 // db
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -59,6 +60,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddScoped<IPublicationRepository,PublicationRepository>();
 builder.Services.AddScoped<ICommentRepository,CommentRepository>();
+builder.Services.AddScoped<IUserFavoriteRepository, UserFavoriteRepository>();
 
 // secret key
 var secretKey = builder.Configuration.GetSection("jwtSettings").GetSection("secretKey").ToString();

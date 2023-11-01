@@ -7,6 +7,8 @@ using EcommerceAPI.Models.User;
 using EcommerceAPI.Models.User.Dto;
 using EcommerceAPI.Models.Comment;
 using EcommerceAPI.Models.Comment.Dto;
+using EcommerceAPI.Models.UserFavorite;
+using EcommerceAPI.Models.UserFavorite.Dto;
 
 namespace EcommerceAPI.Config
 {
@@ -37,6 +39,10 @@ namespace EcommerceAPI.Config
             CreateMap<Comment, CommentDto>().ReverseMap();
             CreateMap<CreateCommentDto, Comment>().ReverseMap();
             CreateMap<UpdateCommentDto, Comment>().ForAllMembers(opts => opts.Condition((_, _, srcMember) => srcMember != null));
+
+            //UserFavorites
+            CreateMap<UserFavorite, CreateUserFavoriteDto>().ReverseMap();
+
 
         }
     }
