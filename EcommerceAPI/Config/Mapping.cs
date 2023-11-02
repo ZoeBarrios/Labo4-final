@@ -9,6 +9,8 @@ using EcommerceAPI.Models.Comment;
 using EcommerceAPI.Models.Comment.Dto;
 using EcommerceAPI.Models.UserFavorite;
 using EcommerceAPI.Models.UserFavorite.Dto;
+using EcommerceAPI.Models.Category.Dto;
+using EcommerceAPI.Models.Category;
 
 namespace EcommerceAPI.Config
 {
@@ -33,7 +35,10 @@ namespace EcommerceAPI.Config
 
 
             //Purchases
-            CreateMap<Purchase, PurchaseDto>().ReverseMap();
+            CreateMap<PurchaseDto, Purchase>();
+            CreateMap<Purchase, PurchasesDto>().ReverseMap();
+            CreateMap<Purchase, PurchaseDto>()
+            .ForMember(dest => dest.Publications, opt => opt.MapFrom(src => src.Publications));
 
             //Comments
             CreateMap<Comment, CommentDto>().ReverseMap();
@@ -43,7 +48,10 @@ namespace EcommerceAPI.Config
             //UserFavorites
             CreateMap<UserFavorite, CreateUserFavoriteDto>().ReverseMap();
 
+            //Category
+            CreateMap<Category, CategoryDto>().ReverseMap();
 
+            
         }
     }
 }

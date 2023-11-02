@@ -7,7 +7,7 @@ namespace EcommerceAPI.Models.Comment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int CommentId { get; set; }
 
         [Required]
 

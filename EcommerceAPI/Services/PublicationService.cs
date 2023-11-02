@@ -54,7 +54,7 @@ namespace EcommerceAPI.Services
 
         public async Task<PublicationDto> GetById(int id)
         {
-            Publication publication = await _publicationRepository.GetOne(u => u.Id == id);
+            Publication publication = await _publicationRepository.GetOne(u => u.PublicationId == id);
 
             if (publication == null)
             {
@@ -93,7 +93,7 @@ namespace EcommerceAPI.Services
 
         public async Task<PublicationDto> UpdateById(int id, UpdatePublicationDto updatePublicationDto)
         {
-            var publication = await _publicationRepository.GetOne(p => p.Id == id);
+            var publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
 
             if (publication == null)
             {
@@ -107,7 +107,7 @@ namespace EcommerceAPI.Services
 
         public async Task DeleteById(int id)
         {
-            Publication publication = await _publicationRepository.GetOne(p => p.Id == id);
+            Publication publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
 
             if (publication == null)
             {
@@ -123,7 +123,7 @@ namespace EcommerceAPI.Services
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            var publications = await _publicationRepository.GetAll(p => publicationsIdS.Contains(p.Id));
+            var publications = await _publicationRepository.GetAll(p => publicationsIdS.Contains(p.PublicationId));
             return publications.ToList();
         }
 

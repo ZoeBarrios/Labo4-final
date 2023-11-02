@@ -30,6 +30,14 @@ namespace EcommerceAPI.Controllers
             return Ok(await _publicationService.GetAll());
         }
 
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PublicationDto>> Get(int id)
+        {
+            return Ok(await _publicationService.GetById(id));
+        }
+
         [HttpGet("category/{CategoryId}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]

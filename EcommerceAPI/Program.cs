@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System.Text.Json.Serialization;
 using EcommerceAPI;
 using EcommerceAPI.Config;
 using EcommerceAPI.Repositories;
@@ -22,8 +21,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Users API",
-        Description = "An ASP.NET Core Web API for managing users",
+        Title = "MarketHub API",
+        Description = "La API de MarketHub, el punto de encuentro en línea para lo usado y lo hecho a mano. Descubre una amplia gama de recursos que abarcan desde tesoros únicos y artículos de segunda mano hasta creaciones originales de vendedores locales, todo en un solo lugar.",
     });
     options.AddSecurityDefinition("Token", new OpenApiSecurityScheme()
     {
@@ -46,6 +45,8 @@ builder.Services.AddScoped<PublicationService>();
 builder.Services.AddScoped<PurchaseService>();
 builder.Services.AddScoped<CommentsService>();
 builder.Services.AddScoped<UserFavoriteService>();
+builder.Services.AddScoped<CategoryService>();
+
 // db
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -61,6 +62,7 @@ builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 builder.Services.AddScoped<IPublicationRepository,PublicationRepository>();
 builder.Services.AddScoped<ICommentRepository,CommentRepository>();
 builder.Services.AddScoped<IUserFavoriteRepository, UserFavoriteRepository>();
+builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
 
 // secret key
 var secretKey = builder.Configuration.GetSection("jwtSettings").GetSection("secretKey").ToString();
@@ -85,6 +87,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+//servir archivos estaticos
 
 app.UseStaticFiles(new StaticFileOptions
 {

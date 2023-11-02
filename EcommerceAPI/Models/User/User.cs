@@ -8,7 +8,7 @@ namespace EcommerceAPI.Models.User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         [Required]
         [MaxLength(128)]
         public string Name { get; set; } = null!;

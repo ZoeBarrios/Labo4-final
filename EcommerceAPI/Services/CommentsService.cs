@@ -36,7 +36,7 @@ namespace EcommerceAPI.Services
 
         public async Task<CommentDto> UpdateById(int id, UpdateCommentDto updateCommentDto)
         {
-            var comment = await _commentRepository.GetOne(p => p.Id == id);
+            var comment = await _commentRepository.GetOne(p => p.CommentId == id);
 
             if (comment == null)
             {
@@ -50,7 +50,7 @@ namespace EcommerceAPI.Services
 
         public async Task DeleteById(int id)
         {
-            Comment comment = await _commentRepository.GetOne(p => p.Id == id);
+            Comment comment = await _commentRepository.GetOne(p => p.CommentId == id);
 
             if (comment == null)
             {

@@ -1,11 +1,13 @@
-﻿namespace EcommerceAPI.Models.Purchase.Dto
+﻿using EcommerceAPI.Models.Publication.Dto;
+
+namespace EcommerceAPI.Models.Purchase.Dto
 {
     public class PurchasesDto
     {
-        public int Id { get; set; }
+        public int PurchaseId { get; set; }
 
         public DateTime PurchaseDate { get; set; }
 
-        public List<Publication.Publication> Publications = null!;
+        public List<PublicationsDto> Publications { get; set; } = null!;
     }
 }

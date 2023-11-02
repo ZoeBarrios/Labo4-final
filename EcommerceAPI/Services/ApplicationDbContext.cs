@@ -29,27 +29,25 @@ namespace EcommerceAPI.Services
 
        
 
-        
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
             modelBuilder.Entity<Category>().HasIndex(c => c.Name).IsUnique(unique: true);
             modelBuilder.Entity<Role>().HasData(
-                new Role { Id = 1, Name = "Admin" },
-                new Role { Id = 2, Name = "User" },
-                new Role { Id = 3, Name = "Moderator" }
+                new Role { RoleId = 1, Name = "Admin" },
+                new Role { RoleId = 2, Name = "User" },
+                new Role { RoleId = 3, Name = "Moderator" }
             );
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1,Name="Electrónica"},
-                new Category { Id = 2,Name="Electrodomésticos"},
-                new Category { Id=3,Name="Moda"},
-                new Category { Id = 4, Name = "Hogar y Jardín" },
-                new Category { Id = 5, Name = "Deportes y Fitness" },
-                new Category { Id = 6, Name = "Belleza y Cuidado Personal" },
-                new Category { Id = 7, Name = "Juguetes y Niños" },
-                new Category { Id = 8, Name = "Libros,Música y Películas" },
-                new Category { Id = 9, Name = "Coleccionables" }
+                new Category { CategoryId = 1,Name="Electrónica"},
+                new Category { CategoryId = 2,Name="Electrodomésticos"},
+                new Category { CategoryId=3,Name="Moda"},
+                new Category { CategoryId = 4, Name = "Hogar y Jardín" },
+                new Category { CategoryId = 5, Name = "Deportes y Fitness" },
+                new Category { CategoryId = 6, Name = "Belleza y Cuidado Personal" },
+                new Category { CategoryId = 7, Name = "Juguetes y Niños" },
+                new Category { CategoryId = 8, Name = "Libros,Música y Películas" },
+                new Category { CategoryId = 9, Name = "Coleccionables" }
 
             );
 

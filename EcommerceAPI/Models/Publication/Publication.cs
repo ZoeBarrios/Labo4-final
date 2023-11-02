@@ -9,7 +9,7 @@ namespace EcommerceAPI.Models.Publication
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int PublicationId { get; set; }
 
         [Required]
         [MaxLength(128)]
@@ -45,9 +45,20 @@ namespace EcommerceAPI.Models.Publication
         [ForeignKey("CategoryId")]
         public Category.Category Category { get; set; } = null!;
 
+        
+
 
     }
 
-    
+    public class PurchasePublication
+    {
+
+        public int PublicationId { get; set; }
+
+        public int PurchaseId { get; set; }
+
+
+    }
+
 
 }

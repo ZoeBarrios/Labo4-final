@@ -7,7 +7,7 @@ namespace EcommerceAPI.Models.Category
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
         public string Name { get; set; } = null!;

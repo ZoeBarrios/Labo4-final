@@ -25,7 +25,7 @@ namespace EcommerceAPI.Services
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
-            var roles = await _roleRepo.GetAll(r => roleIds.Contains(r.Id));
+            var roles = await _roleRepo.GetAll(r => roleIds.Contains(r.RoleId));
             return roles.ToList();
         }
     }

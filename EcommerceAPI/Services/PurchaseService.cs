@@ -23,17 +23,18 @@ namespace EcommerceAPI.Services
         }
 
 
-        public async Task<List<PurchaseDto>> GetAllByUserId(int id)
+        public async Task<List<PurchasesDto>> GetAllByUserId(int id)
         {
 
-            var lista = await _purchaseRepository.GetAll(p => p.UserId == id);
-            
-            return _mapper.Map<List<PurchaseDto>>(lista);
+            var lista = await _purchaseRepository.GetAllPurchases(p=>p.UserId==id);
+
+
+            return _mapper.Map<List<PurchasesDto>>(lista);
         }
 
-        public async Task<PurchaseDto> GetOneById(int UserId,int id)
+        public async Task<PurchaseDto> GetOneById(int id)
         {
-            var purchase = await _purchaseRepository.GetOne(p => p.Id == id && p.UserId== UserId);
+            var purchase = await _purchaseRepository.GetOnePurchase(p=>p.PurchaseId==id);
             return _mapper.Map<PurchaseDto>(purchase);
         }
 
@@ -52,7 +53,7 @@ namespace EcommerceAPI.Services
 
         public async Task<PurchaseDto> UpdateById(int id, List<Publication> publications)
         {
-            var purchase = await _purchaseRepository.GetOne(p => p.Id == id);
+            var purchase = await _purchaseRepository.GetOne(p => p.PurchaseId == id);
 
             if (purchase == null)
             {

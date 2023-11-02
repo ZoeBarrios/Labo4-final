@@ -8,7 +8,7 @@ namespace EcommerceAPI.Models.Purchase
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int PurchaseId { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(10,2)")]
@@ -24,16 +24,10 @@ namespace EcommerceAPI.Models.Purchase
         public User.User User { get; set; } = null!;
 
 
-        public List<Publication.Publication> Publications = null!;
+        public List<Publication.Publication> Publications { get; set; } = null!;
 
+    
 
     }
-    public class PurchasePublication
-    {
-        
-        public int PublicationId { get; set; }
-
-        public int PurchaseId { get; set; }
-        
-    }
+   
 }

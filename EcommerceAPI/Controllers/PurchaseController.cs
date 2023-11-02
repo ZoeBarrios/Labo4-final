@@ -38,24 +38,24 @@ namespace EcommerceAPI.Controllers
             var publications = await _publicationService.GetPublicationsByIds(createPurchaseDto.PublicationsIds);
 
 
-            var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.Id, publications);
+            var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.PurchaseId, publications);
 
             return Created("PurchaseCreated", UpdatePurchase);
 
         }
 
-        [HttpGet("{UserId}")]
+        [HttpGet("/user/{UserId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetByUserId(int UserId)
         {
             return Ok(await _purchaseService.GetAllByUserId(UserId));
         }
 
-        [HttpGet("{UserId}/{id}")]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<PurchaseDto>> GetOneById(int UserId,int id)
+        public async Task<ActionResult<PurchaseDto>> GetOneById(int id)
         {
-            return Ok(await _purchaseService.GetOneById(UserId,id));
+            return Ok(await _purchaseService.GetOneById(id));
         }
     }
 }

@@ -15,9 +15,10 @@ namespace EcommerceAPI.Controllers
     {
         private readonly UserService _userService;
         private readonly AuthService _authService;
-        public UserController(UserService userService)
+        public UserController(UserService userService,AuthService authService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -48,9 +49,17 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserDto createUserDto)
+        
+        public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserDto createUserDto,int UserId)
         {
+            try
+            {
+                var user = await _userService.GetById(UserId);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -62,24 +71,23 @@ namespace EcommerceAPI.Controllers
 
         }
 
-        [HttpPut("{idUser}/{idToUpdate:int}")]
+        [HttpPut("{UserId}/{IdToUpdate}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-
-        public async Task<ActionResult<UserDto>> Put(int idUser,int idToUpdate, [FromBody] UpdateUserDto updateUserDto)
+        public async Task<ActionResult<UserDto>> Put(int UserId, int IdToUpdate, [FromBody] UpdateUserDto updateUserDto)
         {
             try
             {
-                var user = await _userService.GetById(idUser);
+                var user = await _userService.GetById(UserId);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
-            List<Role> roles = await _userService.GetRolesOfUserById(idUser);
+            List<Role> roles = await _userService.GetRolesOfUserById(UserId);
             bool isAdmin = false;
 
             foreach (Role role in roles)
@@ -93,7 +101,7 @@ namespace EcommerceAPI.Controllers
 
             if (!isAdmin)
             {
-                if (idToUpdate != idUser)
+                if (IdToUpdate != UserId)
 
                 {
                     return Unauthorized();
@@ -101,7 +109,7 @@ namespace EcommerceAPI.Controllers
             }
             try
             {
-                var userUpdated = await _userService.UpdateById(idToUpdate, updateUserDto);
+                var userUpdated = await _userService.UpdateById(IdToUpdate, updateUserDto);
                 return Ok(userUpdated);
             }
             catch (Exception ex)
@@ -110,15 +118,15 @@ namespace EcommerceAPI.Controllers
             }
         }
 
-        [HttpDelete("{idUser}/{idToDelete}")]
+        [HttpDelete("{UserId}/{IdToDelete}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult> Delete(int idToDelete, int idUser)
+        public async Task<ActionResult> Delete(int IdToDelete, int UserId)
         {
             try
             {
-                await _authService.IsUserAuthorized(idUser, idToDelete);
+                await _authService.IsUserAuthorized(UserId, IdToDelete);
             }catch(Exception ex)
             {
                 return Unauthorized();
@@ -126,10 +134,10 @@ namespace EcommerceAPI.Controllers
             
             try
             {
-                await _userService.DeleteById(idToDelete);
+                await _userService.DeleteById(IdToDelete);
                 return Ok(new
                 {
-                    message = $"User with Id = {idToDelete} was deleted"
+                    message = $"User with Id = {IdToDelete} was deleted"
                 });
             }
             catch (Exception ex)

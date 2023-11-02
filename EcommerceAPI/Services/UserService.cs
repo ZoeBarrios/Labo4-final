@@ -5,8 +5,7 @@ using EcommerceAPI.Models.Role;
 using EcommerceAPI.Models.User;
 using EcommerceAPI.Models.User.Dto;
 using EcommerceAPI.Repositories;
-using EcommerceAPI.Models.Publication;
-using EcommerceAPI.Models.Publication.Dto;
+
 
 namespace EcommerceAPI.Services
 {
@@ -32,7 +31,7 @@ namespace EcommerceAPI.Services
 
         public async Task<UserDto> GetById(int id)
         {
-            var user = await _userRepo.GetOne(u => u.Id == id);
+            var user = await _userRepo.GetOne(u => u.UserId == id);
 
             if (user == null || user.IsActive==false)
             {
@@ -82,7 +81,7 @@ namespace EcommerceAPI.Services
 
         public async Task<UserDto> UpdateById(int id, UpdateUserDto updateUserDto)
         {
-            var user = await _userRepo.GetOne(u => u.Id == id);
+            var user = await _userRepo.GetOne(u => u.UserId == id);
 
             if (user == null)
             {
@@ -96,7 +95,7 @@ namespace EcommerceAPI.Services
 
         public async Task DeleteById(int id)
         {
-            User user = await _userRepo.GetOne(u => u.Id == id);
+            User user = await _userRepo.GetOne(u => u.UserId == id);
 
             if (user == null)
             {
@@ -109,7 +108,7 @@ namespace EcommerceAPI.Services
         
         public async Task<User> UpdateUserRolesById(int id, List<Role> roles)
         {
-            var user = await _userRepo.GetOne(u => u.Id == id);
+            var user = await _userRepo.GetOne(u => u.UserId == id);
 
             if (user == null)
             {
@@ -123,7 +122,7 @@ namespace EcommerceAPI.Services
 
         public async Task<List<Role>> GetRolesOfUserById(int id)
         {
-            var user = await _userRepo.GetOne(u => u.Id == id);
+            var user = await _userRepo.GetOne(u => u.UserId == id);
 
             if (user == null)
             {

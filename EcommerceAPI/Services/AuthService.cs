@@ -20,7 +20,7 @@ namespace EcommerceAPI.Services
         public string GenerateJwtToken(User user)
         {
             var claims = new ClaimsIdentity();
-            claims.AddClaim(new Claim("id", user.Id.ToString()));
+            claims.AddClaim(new Claim("id", user.UserId.ToString()));
             if (user.Roles != null)
             {
                 foreach (var role in user.Roles)

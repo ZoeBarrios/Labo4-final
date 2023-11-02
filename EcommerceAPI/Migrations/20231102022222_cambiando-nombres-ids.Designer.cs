@@ -4,6 +4,7 @@ using EcommerceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231102022222_cambiando-nombres-ids")]
+    partial class cambiandonombresids
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace EcommerceAPI.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -119,7 +122,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Publication.Publication", b =>
@@ -162,7 +165,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Publications", (string)null);
+                    b.ToTable("Publications");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Purchase.Purchase", b =>
@@ -186,7 +189,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchases", (string)null);
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Purchase.PurchasePublication", b =>
@@ -201,7 +204,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchasePublication", (string)null);
+                    b.ToTable("PurchasePublication");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Role.Role", b =>
@@ -219,7 +222,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -251,7 +254,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RoleUsers", (string)null);
+                    b.ToTable("RoleUsers");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.User.User", b =>
@@ -291,7 +294,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.UserFavorite.UserFavorite", b =>
@@ -306,7 +309,7 @@ namespace EcommerceAPI.Migrations
 
                     b.HasIndex("PublicationId");
 
-                    b.ToTable("UserFavorites", (string)null);
+                    b.ToTable("UserFavorites");
                 });
 
             modelBuilder.Entity("EcommerceAPI.Models.Comment.Comment", b =>
