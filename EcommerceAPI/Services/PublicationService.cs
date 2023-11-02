@@ -2,6 +2,7 @@
 using EcommerceAPI.Models.Publication;
 using EcommerceAPI.Models.Publication.Dto;
 using EcommerceAPI.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Web.Http;
 
@@ -21,12 +22,14 @@ namespace EcommerceAPI.Services
         }
 
 
-        public async Task<List<PublicationsDto>> GetAll()
+        public async Task<List<PublicationsDto>> GetAll(int page,int pageSize)
         {
-            var lista = await _publicationRepository.GetAll(); 
+            var lista = await _publicationRepository.GetPage(page, pageSize);
             var filteredList = lista.Where(p => !p.IsPaused).ToList(); 
             return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
+
+       
 
 
 

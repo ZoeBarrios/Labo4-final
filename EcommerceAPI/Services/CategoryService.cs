@@ -62,7 +62,7 @@ namespace EcommerceAPI.Services
             return _mapper.Map<CategoryDto>(await _categoryRepository.Update(updated));
         }
 
-        public async Task<CategoryDto> Create(CategoryDto categoryDto)
+        public async Task<CategoryDto> Create(CreateCategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
 

@@ -9,9 +9,10 @@ namespace EcommerceAPI.Repositories
     public interface IUserRepository : IRepository<User>
     {
         Task<User> Update(User entity);
+        Task<List<User>> GetAllWithRoles(Expression<Func<User, bool>>? filter = null);
     }
 
-    public class UserRepository : Repository<User>, IUserRepository
+     public class UserRepository : Repository<User>, IUserRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -36,6 +37,16 @@ namespace EcommerceAPI.Repositories
             }
             
             return await query.FirstOrDefaultAsync();
+        }
+
+        public  async Task<List<User>> GetAllWithRoles(Expression<Func<User, bool>>? filter = null)
+        {
+            IQueryable<User> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter).Include(u => u.Roles);
+            }
+            return await query.ToListAsync();
         }
     }
 }

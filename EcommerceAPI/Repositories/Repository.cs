@@ -35,7 +35,7 @@ namespace EcommerceAPI.Repositories
             await Save();
         }
 
-        public async Task<T> GetOne(Expression<Func<T, bool>>? filter = null)
+        public virtual async Task<T> GetOne(Expression<Func<T, bool>>? filter = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
@@ -45,7 +45,7 @@ namespace EcommerceAPI.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null)
+        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)

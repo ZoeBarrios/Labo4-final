@@ -13,21 +13,27 @@ namespace EcommerceAPI.Controllers
     public class PublicationController : ControllerBase
     {
         private readonly PublicationService _publicationService;
-        private readonly AuthService authService;
 
-        public PublicationController(PublicationService publicationService, AuthService authService)
+
+        public PublicationController(PublicationService publicationService)
         {
             _publicationService = publicationService;
-            this.authService = authService;
         }
 
 
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PublicationsDto>>> Get()
+        public async Task<ActionResult<IEnumerable<PublicationDto>>> Get([FromQuery] int page = 1, [FromQuery]int pageSize = 20)
         {
-            return Ok(await _publicationService.GetAll());
+            if(page > 0 && pageSize > 0)
+            {
+                var publications = await _publicationService.GetAll(page, pageSize);
+                return Ok(publications);
+            }
+
+            return BadRequest();
+            
         }
 
         [HttpGet("{id}")]

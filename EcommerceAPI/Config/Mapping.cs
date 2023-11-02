@@ -50,8 +50,10 @@ namespace EcommerceAPI.Config
 
             //Category
             CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
 
-            
+
         }
     }
 }

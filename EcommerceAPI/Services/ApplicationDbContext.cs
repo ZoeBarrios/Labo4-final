@@ -51,6 +51,11 @@ namespace EcommerceAPI.Services
 
             );
 
+            modelBuilder.Entity<User>().HasMany(e => e.Roles).WithMany().UsingEntity<RoleUsers>(
+               l => l.HasOne<Role>().WithMany().HasForeignKey(e => e.RoleId),
+               r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
+           );
+
             modelBuilder.Entity<Purchase>()
             .HasOne(p => p.User)
             .WithMany()
@@ -76,10 +81,7 @@ namespace EcommerceAPI.Services
 
 
 
-            modelBuilder.Entity<User>().HasMany(e => e.Roles).WithMany().UsingEntity<RoleUsers>(
-                l => l.HasOne<Role>().WithMany().HasForeignKey(e => e.RoleId),
-                r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
-            );
+           
 
 
             modelBuilder.Entity<Purchase>().HasMany(e => e.Publications).WithMany().UsingEntity<PurchasePublication>(

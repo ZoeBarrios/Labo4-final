@@ -79,14 +79,14 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize(Roles ="Admin")]
-        public async Task<ActionResult<PublicationDto>> Post([FromForm] CategoryDto categoryDto)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<PublicationDto>> Post([FromBody] CreateCategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
 
             var categoryCreated = await _categoryService.Create(categoryDto);
 

@@ -52,11 +52,11 @@ namespace EcommerceAPI.Services
 
             if (email != null)
             {
-                users = await _userRepo.GetAll(u => u.Email == email);
+                users = await _userRepo.GetAllWithRoles(u => u.Email == email);
             }
             else
             {
-                users = await _userRepo.GetAll(u => u.UserName == username);
+                users = await _userRepo.GetAllWithRoles(u => u.UserName == username);
                 
             }
 
