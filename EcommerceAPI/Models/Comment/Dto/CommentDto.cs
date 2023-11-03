@@ -19,6 +19,8 @@ namespace EcommerceAPI.Models.Comment.Dto
        
         public int UserId { get; set; }
 
+
+        public bool isEliminated { get; set; }
      
         public int PublicationId { get; set; }
 

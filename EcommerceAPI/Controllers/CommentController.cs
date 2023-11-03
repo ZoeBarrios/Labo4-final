@@ -28,7 +28,15 @@ namespace EcommerceAPI.Controllers
             return Ok(await _commentsService.GetAllByPublication(id));
         }
 
-       
+        [HttpGet("/publication/eliminated/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles ="Admin")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetEliminated(int id)
+        {
+            return Ok(await _commentsService.GetEliminatedCommentsByPublication(id));
+        }
+
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -60,6 +68,25 @@ namespace EcommerceAPI.Controllers
             {
                 var updatedComment = await _commentsService.UpdateById(id, updateCommentDto);
                 return Ok(updatedComment);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Delete(int id)
+        {
+
+            try
+            {
+                await _commentsService.DeleteById(id);
+                return NoContent();
             }
             catch (Exception ex)
             {

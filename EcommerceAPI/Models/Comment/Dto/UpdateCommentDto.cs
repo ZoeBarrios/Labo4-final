@@ -10,5 +10,7 @@ namespace EcommerceAPI.Models.Comment.Dto
 
       
         public int? Rating { get; set; }
+
+        public bool? isEliminated { get; set; } 
     }
 }

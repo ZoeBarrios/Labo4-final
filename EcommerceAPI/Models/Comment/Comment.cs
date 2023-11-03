@@ -27,6 +27,8 @@ namespace EcommerceAPI.Models.Comment
         [Required]
         public int PublicationId { get; set; }
 
+        public bool isEliminated { get; set; } = false;
+
         [ForeignKey("PublicationId")]
         public Publication.Publication Publication { get; set;} = null!;
     }

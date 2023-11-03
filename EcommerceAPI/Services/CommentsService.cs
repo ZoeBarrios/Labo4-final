@@ -20,7 +20,17 @@ namespace EcommerceAPI.Services
 
         public async Task<List<CommentDto>> GetAllByPublication(int id)
         {
-            var lista = await _commentRepository.GetAll(c=>c.PublicationId==id);
+            var lista = await _commentRepository.GetAll(c => c.PublicationId == id);
+            var comments = lista.Where(c => c.isEliminated == false).ToList();
+            return _mapper.Map<List<CommentDto>>(comments);
+        }
+
+
+        public async Task<List<CommentDto>> GetEliminatedCommentsByPublication(int id)
+        {
+            var lista = await _commentRepository.GetAll(c => c.PublicationId == id);
+            var comments = lista.Where(c => c.isEliminated == true).ToList();
+
             return _mapper.Map<List<CommentDto>>(lista);
         }
 
@@ -56,7 +66,8 @@ namespace EcommerceAPI.Services
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
-            await _commentRepository.Delete(comment);
+            comment.isEliminated = true;
+            await _commentRepository.Update(comment);
         }
 
     }
