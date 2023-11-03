@@ -49,17 +49,11 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles="Admin")]//EL usuario no neceista hacer ningun post de usuario, solo registrarse.
         
-        public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserDto createUserDto,int UserId)
+        public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserDto createUserDto)
         {
-            try
-            {
-                var user = await _userService.GetById(UserId);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -75,37 +69,17 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
 
         public async Task<ActionResult<UserDto>> Put(int UserId, int IdToUpdate, [FromBody] UpdateUserDto updateUserDto)
         {
             try
             {
-                var user = await _userService.GetById(UserId);
+                await _authService.IsUserAuthorized(UserId, IdToUpdate);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
-            }
-
-            List<Role> roles = await _userService.GetRolesOfUserById(UserId);
-            bool isAdmin = false;
-
-            foreach (Role role in roles)
-            {
-                if (role.Name == "Admin")
-                {
-                    isAdmin = true;
-                    break;
-                }
-            }
-
-            if (!isAdmin)
-            {
-                if (IdToUpdate != UserId)
-
-                {
-                    return Unauthorized();
-                }
+                return Unauthorized();
             }
             try
             {
@@ -119,9 +93,10 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpDelete("{UserId}/{IdToDelete}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult> Delete(int IdToDelete, int UserId)
         {
             try
@@ -135,10 +110,7 @@ namespace EcommerceAPI.Controllers
             try
             {
                 await _userService.DeleteById(IdToDelete);
-                return Ok(new
-                {
-                    message = $"User with Id = {IdToDelete} was deleted"
-                });
+                return NoContent();
             }
             catch (Exception ex)
             {

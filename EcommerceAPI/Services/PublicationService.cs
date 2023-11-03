@@ -120,14 +120,14 @@ namespace EcommerceAPI.Services
             await _publicationRepository.Update(publication);
         }
 
-        public async Task<List<PublicationDto>> GetPublicationDtoByIds(List<int> publicationsIdS)
+        public async Task<List<PublicationsDto>> GetPublicationDtoByIds(List<int> publicationsIdS)
         {
             if (publicationsIdS == null || publicationsIdS.Count == 0)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             var publications = await _publicationRepository.GetAll(p => publicationsIdS.Contains(p.PublicationId));
-            return _mapper.Map<List<PublicationDto>>(publications);
+            return _mapper.Map<List<PublicationsDto>>(publications);
         }
 
         public async Task<List<Publication>> GetPublicationsByIds(List<int> ids)

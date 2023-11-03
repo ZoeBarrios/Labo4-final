@@ -106,7 +106,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult> Delete(int id)
@@ -115,10 +115,7 @@ namespace EcommerceAPI.Controllers
             try
             {
                 await _publicationService.DeleteById(id);
-                return Ok(new
-                {
-                    message = $"Publication with Id = {id} was deleted"
-                });
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -127,6 +124,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpGet("Images/{imageName}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetImage(string imageName)
         {
             var imagePath = Path.Combine("Images", imageName);

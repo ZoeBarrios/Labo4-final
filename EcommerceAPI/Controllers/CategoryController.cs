@@ -62,7 +62,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "Admin")]
@@ -72,10 +72,7 @@ namespace EcommerceAPI.Controllers
             try
             {
                 await _categoryService.DeleteById(id);
-                return Ok(new
-                {
-                    message = $"Category with Id = {id} was deleted"
-                });
+                return NoContent();
             }
             catch (Exception ex)
             {

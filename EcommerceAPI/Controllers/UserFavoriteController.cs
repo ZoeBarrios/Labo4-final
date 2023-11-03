@@ -24,7 +24,7 @@ namespace EcommerceAPI.Controllers
 
         [HttpGet("/user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PublicationDto>>> GetAllByUserId(int id)
+        public async Task<ActionResult<IEnumerable<PublicationsDto>>> GetAllByUserId(int id)
         {
             var publicationsId = await _userFavoriteService.GetAllByUserId(id);
             try
@@ -59,11 +59,11 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpDelete("{userId}/{publicationId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-        public async Task DeleteById(int userId,int publicationId)
+        public async Task<ActionResult> DeleteById(int userId,int publicationId)
         {
             var favorite = await _userFavoriteService.GetOne(userId, publicationId);
 
@@ -73,6 +73,8 @@ namespace EcommerceAPI.Controllers
             }
 
             await _userFavoriteService.Delete(favorite);
+
+            return NoContent();
         }
     }
 }

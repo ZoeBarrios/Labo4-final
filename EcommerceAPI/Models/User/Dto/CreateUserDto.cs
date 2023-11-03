@@ -20,5 +20,7 @@ namespace EcommerceAPI.Models.User.Dto
         public string UserName { get; set; } = null!;
         [EmailAddress]
         public string? Email { get; set; }
+
+       
     }
 }
