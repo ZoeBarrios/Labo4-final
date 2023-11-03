@@ -30,6 +30,8 @@ namespace EcommerceAPI.Config
             CreateMap<Publication, PublicationsDto>().ReverseMap();
             CreateMap<Publication, PublicationDto>().ReverseMap();
             CreateMap<CreatePublicationDto, Publication>().ReverseMap();
+            CreateMap<Publication,PublicationCreatedDto>().ReverseMap();
+            CreateMap<CreatePublicationDto, PublicationCreatedDto>().ForAllMembers(opts => opts.Condition((_, _, srcMember) => srcMember != null));
             // no mapear los null en el update
             CreateMap<UpdatePublicationDto, Publication>().ForAllMembers(opts => opts.Condition((_, _, srcMember) => srcMember != null));
 
@@ -45,13 +47,14 @@ namespace EcommerceAPI.Config
             CreateMap<CreateCommentDto, Comment>().ReverseMap();
             CreateMap<UpdateCommentDto, Comment>().ForAllMembers(opts => opts.Condition((_, _, srcMember) => srcMember != null));
 
-            //UserFavorites
+            //UserFavoritesa    
             CreateMap<UserFavorite, CreateUserFavoriteDto>().ReverseMap();
+            CreateMap<UserFavorite, UserFavoriteDto>().ReverseMap();
 
             //Category
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
-            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+            CreateMap<UpdateCategoryDto, Category>().ForAllMembers(opts => opts.Condition((_, _, srcMember) => srcMember != null));
 
 
         }

@@ -2,7 +2,6 @@
 using EcommerceAPI.Models.Publication;
 using EcommerceAPI.Models.Publication.Dto;
 using EcommerceAPI.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Web.Http;
 
@@ -30,9 +29,6 @@ namespace EcommerceAPI.Services
         }
 
        
-
-
-
         public async Task<List<PublicationsDto>> GetAllByName(string name)
         {
             var lista = await _publicationRepository.GetAll();
@@ -72,8 +68,9 @@ namespace EcommerceAPI.Services
 
         public async Task<PublicationDto> Create(CreatePublicationDto createPublicationDto)
         {
-            if (createPublicationDto.Image != null)
-            {
+            PublicationCreatedDto createdPublication;
+            
+            
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + createPublicationDto.Image.FileName;
                 string baseUrl = host;
                 string imageUrl = baseUrl + "Images/" + uniqueFileName;
@@ -83,10 +80,13 @@ namespace EcommerceAPI.Services
                 {
                     await createPublicationDto.Image.CopyToAsync(stream);
                 }
+                createdPublication = _mapper.Map<PublicationCreatedDto>(createPublicationDto);
+                createdPublication.ImageUrl = imageUrl;
 
-                createPublicationDto.ImageUrl = imageUrl;
-            }
-            var publication = _mapper.Map<Publication>(createPublicationDto);
+
+
+
+            var publication = _mapper.Map<Publication>(createdPublication);
 
 
             await _publicationRepository.Add(publication);
@@ -120,16 +120,22 @@ namespace EcommerceAPI.Services
             await _publicationRepository.Update(publication);
         }
 
-        public async Task<List<Publication>> GetPublicationsByIds(List<int> publicationsIdS)
+        public async Task<List<PublicationDto>> GetPublicationDtoByIds(List<int> publicationsIdS)
         {
             if (publicationsIdS == null || publicationsIdS.Count == 0)
             {
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
             var publications = await _publicationRepository.GetAll(p => publicationsIdS.Contains(p.PublicationId));
-            return publications.ToList();
+            return _mapper.Map<List<PublicationDto>>(publications);
         }
 
+        public async Task<List<Publication>> GetPublicationsByIds(List<int> ids)
+        {
+            var publications = await _publicationRepository.GetAll(p => ids.Contains(p.PublicationId));
+
+            return publications.ToList();
+        }
 
 
 

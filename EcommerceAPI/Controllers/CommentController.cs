@@ -20,13 +20,15 @@ namespace EcommerceAPI.Controllers
         
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/publication/{id}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CommentDto>>> Get(int id)
         {
             return Ok(await _commentsService.GetAllByPublication(id));
         }
+
+       
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

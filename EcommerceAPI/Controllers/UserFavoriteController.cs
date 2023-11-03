@@ -22,15 +22,16 @@ namespace EcommerceAPI.Controllers
             _publicationService = publicationService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PurchasesDto>>> GetAllByUserId(int id)
+        public async Task<ActionResult<IEnumerable<PublicationDto>>> GetAllByUserId(int id)
         {
             var publicationsId = await _userFavoriteService.GetAllByUserId(id);
             try
             {
-                var purchases = await _publicationService.GetPublicationsByIds(publicationsId);
-                return Ok(purchases);
+                var publications = await _publicationService.GetPublicationDtoByIds(publicationsId);
+
+                return Ok(publications);
             }
             catch(Exception rc)
             {

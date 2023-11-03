@@ -13,7 +13,7 @@ namespace EcommerceAPI.Services
     {
         private readonly IUserFavoriteRepository _userFavorite;
         private readonly IMapper _mapper;
-        public UserFavoriteService(IUserFavoriteRepository userFavorite,IMapper mapper) 
+        public UserFavoriteService(IUserFavoriteRepository userFavorite,IMapper mapper,IPublicationRepository publicationRepository) 
         {
             _mapper = mapper;
             _userFavorite = userFavorite;
@@ -37,7 +37,7 @@ namespace EcommerceAPI.Services
         public async Task<UserFavorite> GetOne(int UserId,int PublicationId)
         {
             var favorite = await _userFavorite.GetOne(f => f.UserId == UserId && f.PublicationId == PublicationId);
-  
+            
             
             return favorite;
         }
@@ -54,7 +54,7 @@ namespace EcommerceAPI.Services
 
             var favoritePublicationIds = favorites.Select(uf => uf.PublicationId).ToList();
 
-
+            
             return favoritePublicationIds;
         }
 

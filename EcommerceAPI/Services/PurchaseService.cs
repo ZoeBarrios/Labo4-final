@@ -35,6 +35,11 @@ namespace EcommerceAPI.Services
         public async Task<PurchaseDto> GetOneById(int id)
         {
             var purchase = await _purchaseRepository.GetOnePurchase(p=>p.PurchaseId==id);
+
+            if (purchase == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
             return _mapper.Map<PurchaseDto>(purchase);
         }
 

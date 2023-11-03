@@ -31,7 +31,15 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> Get(int id)
         {
-            return Ok(await _categoryService.GetOne(id));
+            try
+            {
+                return Ok(await _categoryService.GetOne(id));
+            }
+            catch
+            {
+                return NotFound(new { message = $"No category with Id = {id}" });
+            }
+            
         }
 
         [HttpPut("{id}")]
@@ -66,7 +74,7 @@ namespace EcommerceAPI.Controllers
                 await _categoryService.DeleteById(id);
                 return Ok(new
                 {
-                    message = $"Publication with Id = {id} was deleted"
+                    message = $"Category with Id = {id} was deleted"
                 });
             }
             catch (Exception ex)

@@ -43,7 +43,7 @@ namespace EcommerceAPI.Services
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            var updated = _mapper.Map<Comment>(updateCommentDto);
+            var updated = _mapper.Map(updateCommentDto,comment);
 
             return _mapper.Map<CommentDto>(await _commentRepository.Update(updated));
         }

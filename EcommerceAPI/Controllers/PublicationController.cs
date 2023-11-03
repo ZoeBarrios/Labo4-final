@@ -78,9 +78,7 @@ namespace EcommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-
            
-
             var publicationCreated = await _publicationService.Create(createPublicationDto);
 
             return Created("PublicationCreated", publicationCreated);
@@ -107,19 +105,19 @@ namespace EcommerceAPI.Controllers
             }
         }
 
-        [HttpDelete("{idUser}/{idToDelete}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult> Delete(int idToDelete, int idUser)
+        public async Task<ActionResult> Delete(int id)
         {
 
             try
             {
-                await _publicationService.DeleteById(idToDelete);
+                await _publicationService.DeleteById(id);
                 return Ok(new
                 {
-                    message = $"Publication with Id = {idToDelete} was deleted"
+                    message = $"Publication with Id = {id} was deleted"
                 });
             }
             catch (Exception ex)

@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EcommerceAPI.Models.Publication.Dto
 {
-    public class CreatePublicationDto
+    public class PublicationCreatedDto
     {
         [Required]
         [MaxLength(128)]
@@ -18,16 +17,13 @@ namespace EcommerceAPI.Models.Publication.Dto
 
         public int? Stock { get; set; } = 1;
 
-        [Required]
-        public IFormFile Image { get; set; }
-
+        public string? ImageUrl { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
- 
+
         [Required]
         public int CategoryId { get; set; }
-
     }
 }

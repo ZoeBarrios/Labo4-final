@@ -27,7 +27,13 @@ namespace EcommerceAPI.Services
 
         public async Task<CategoryDto> GetOne(int id)
         {
-            return _mapper.Map<CategoryDto>(await _categoryRepository.GetOne(c=>c.CategoryId==id));
+            var category = await _categoryRepository.GetOne(c => c.CategoryId == id);
+            if (category == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            return _mapper.Map<CategoryDto>(category);
         }
 
         public async Task<CategoryDto> Update(Category category)
@@ -57,7 +63,7 @@ namespace EcommerceAPI.Services
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            var updated = _mapper.Map<Category>(updateCategoryDto);
+            var updated = _mapper.Map(updateCategoryDto,category);
 
             return _mapper.Map<CategoryDto>(await _categoryRepository.Update(updated));
         }

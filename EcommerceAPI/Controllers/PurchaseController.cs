@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/purchases")]
     [ApiController]
     [Authorize]
     public class PurchaseController : ControllerBase
@@ -37,6 +37,7 @@ namespace EcommerceAPI.Controllers
 
             var publications = await _publicationService.GetPublicationsByIds(createPurchaseDto.PublicationsIds);
 
+            
 
             var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.PurchaseId, publications);
 
@@ -44,18 +45,27 @@ namespace EcommerceAPI.Controllers
 
         }
 
-        [HttpGet("/user/{UserId}")]
+        [HttpGet("/purchase/user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetByUserId(int UserId)
+        public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetByUserId(int id)
         {
-            return Ok(await _purchaseService.GetAllByUserId(UserId));
+            
+                return Ok(await _purchaseService.GetAllByUserId(id));
+            
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<PurchaseDto>> GetOneById(int id)
         {
-            return Ok(await _purchaseService.GetOneById(id));
+            try
+            {
+                return Ok(await _purchaseService.GetOneById(id));
+            }
+            catch
+            {
+                return NotFound(new { message = $"No purchase with Id = {id}" });
+            }
         }
     }
 }
