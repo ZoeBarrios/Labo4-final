@@ -12,9 +12,13 @@ namespace EcommerceAPI.Models.Purchase.Dto
         public int UserId { get; set; }
 
         [Required]
+        public int SellerId { get; set; }
+
+        [Required]
         public List<int> PublicationsIds { get; set; } = null!;
 
-        public int SellerId { get; set; }
+       
+     
     }
 
    

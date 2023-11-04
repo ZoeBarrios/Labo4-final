@@ -57,7 +57,8 @@ namespace EcommerceAPI.Services
             Purchase purchase = new Purchase()
             {
                 Amount = createPurchaseDto.Amount,
-                UserId = createPurchaseDto.UserId
+                UserId = createPurchaseDto.UserId,
+                SellerId=createPurchaseDto.SellerId
             };
 
             await _purchaseRepository.Add(purchase);
