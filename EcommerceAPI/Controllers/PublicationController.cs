@@ -65,6 +65,17 @@ namespace EcommerceAPI.Controllers
           
         }
 
+        [HttpGet("user/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<PublicationsDto>> GetByUserId(int id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        {
+
+            return Ok(await _publicationService.GetAllByUserId(id));
+
+        }
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
