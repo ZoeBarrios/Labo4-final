@@ -9,8 +9,9 @@ using System.Net;
 namespace EcommerceAPI.Controllers
 {
     [Route("api/favorites")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+   
     public class UserFavoriteController : ControllerBase
     {
         private readonly UserFavoriteService _userFavoriteService;
@@ -22,7 +23,7 @@ namespace EcommerceAPI.Controllers
             _publicationService = publicationService;
         }
 
-        [HttpGet("/user/{id}")]
+        [HttpGet("user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PublicationsDto>>> GetAllByUserId(int id)
         {

@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace EcommerceAPI.Controllers
 {
     [Route("api/purchases")]
-    [ApiController]
     [Authorize]
+    [ApiController]
+    
     public class PurchaseController : ControllerBase
     {
         private readonly PurchaseService _purchaseService;
@@ -45,13 +46,22 @@ namespace EcommerceAPI.Controllers
 
         }
 
-        [HttpGet("/purchase/user/{id}")]
+        [HttpGet("user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetByUserId(int id)
         {
             
                 return Ok(await _purchaseService.GetAllByUserId(id));
             
+        }
+
+        [HttpGet("seller/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<PurchaseDto>>> GetBySellerId(int id)
+        {
+
+            return Ok(await _purchaseService.GetAllBySelllerId(id));
+
         }
 
         [HttpGet("{id}")]

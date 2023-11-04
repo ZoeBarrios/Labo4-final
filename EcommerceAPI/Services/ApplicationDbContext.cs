@@ -56,11 +56,19 @@ namespace EcommerceAPI.Services
                r => r.HasOne<User>().WithMany().HasForeignKey(e => e.UserId)
            );
 
+            //Para relaciones de la bbdd pero enrealidad no borramos los registros
+
             modelBuilder.Entity<Purchase>()
             .HasOne(p => p.User)
             .WithMany()
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Purchase>()
+           .HasOne(p => p.Seller)
+           .WithMany()
+           .HasForeignKey(p => p.SellerId)
+           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
             .HasOne(p => p.User)

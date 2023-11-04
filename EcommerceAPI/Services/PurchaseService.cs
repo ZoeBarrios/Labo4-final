@@ -32,6 +32,15 @@ namespace EcommerceAPI.Services
             return _mapper.Map<List<PurchasesDto>>(lista);
         }
 
+        public async Task<List<PurchasesDto>> GetAllBySelllerId(int id)
+        {
+
+            var lista = await _purchaseRepository.GetAllPurchases(p => p.SellerId == id);
+
+
+            return _mapper.Map<List<PurchasesDto>>(lista);
+        }
+
         public async Task<PurchaseDto> GetOneById(int id)
         {
             var purchase = await _purchaseRepository.GetOnePurchase(p=>p.PurchaseId==id);
@@ -69,6 +78,7 @@ namespace EcommerceAPI.Services
 
             return _mapper.Map<PurchaseDto>(await _purchaseRepository.Update(purchase));
         }
+
 
 
     }

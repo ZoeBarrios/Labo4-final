@@ -9,7 +9,7 @@ namespace EcommerceAPI.Controllers
 {
     [Route("api/comments")]
     [ApiController]
-    [Authorize]
+    
     public class CommentController : ControllerBase
     {
         private readonly CommentsService _commentsService;
@@ -20,7 +20,7 @@ namespace EcommerceAPI.Controllers
         
         }
 
-        [HttpGet("/publication/{id}")]
+        [HttpGet("publication/{id}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CommentDto>>> Get(int id)
@@ -28,7 +28,7 @@ namespace EcommerceAPI.Controllers
             return Ok(await _commentsService.GetAllByPublication(id));
         }
 
-        [HttpGet("/publication/eliminated/{id}")]
+        [HttpGet("publication/eliminated/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult<IEnumerable<CommentDto>>> GetEliminated(int id)

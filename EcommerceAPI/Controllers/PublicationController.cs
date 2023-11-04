@@ -47,9 +47,9 @@ namespace EcommerceAPI.Controllers
         [HttpGet("category/{CategoryId}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<PublicationsDto>>> GetByCategory(int CategoryId)
+        public async Task<ActionResult<IEnumerable<PublicationsDto>>> GetByCategory(int CategoryId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            return Ok(await _publicationService.GetAllByCategory(CategoryId));
+            return Ok(await _publicationService.GetAllByCategory(CategoryId,page,pageSize));
         }
 
 
@@ -58,10 +58,10 @@ namespace EcommerceAPI.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PublicationsDto>> GetByName(string name)
+        public async Task<ActionResult<PublicationsDto>> GetByName(string name, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
            
-            return Ok(await _publicationService.GetAllByName(name));
+            return Ok(await _publicationService.GetAllByName(name, page, pageSize));
           
         }
 

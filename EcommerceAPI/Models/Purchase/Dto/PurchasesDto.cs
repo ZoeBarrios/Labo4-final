@@ -8,6 +8,10 @@ namespace EcommerceAPI.Models.Purchase.Dto
 
         public DateTime PurchaseDate { get; set; }
 
+        public int SellerId { get; set; }
+
         public List<PublicationsDto> Publications { get; set; } = null!;
+
+
     }
 }

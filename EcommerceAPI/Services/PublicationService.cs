@@ -29,19 +29,20 @@ namespace EcommerceAPI.Services
         }
 
        
-        public async Task<List<PublicationsDto>> GetAllByName(string name)
+        public async Task<List<PublicationsDto>> GetAllByName(string name,int page, int pageSize)
         {
-            var lista = await _publicationRepository.GetAll();
+            var lista = await _publicationRepository.GetPage(page, pageSize);
             var filteredList = lista.Where(p =>
             p.Name.ToLower().Contains(name.ToLower()) && !p.IsPaused
             ).ToList();
             return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
 
-        public async Task<List<PublicationsDto>> GetAllByCategory(int idCategory)
+        public async Task<List<PublicationsDto>> GetAllByCategory(int idCategory,int page, int pageSize)
         {
-            var lista = await _publicationRepository.GetAll(p => p.CategoryId==idCategory);
-            return _mapper.Map<List<PublicationsDto>>(lista);
+            var lista = await _publicationRepository.GetPage(page, pageSize);
+            var filteredList = lista.Where(p => p.CategoryId==idCategory).ToList();
+            return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
 
         public async Task<List<PublicationsDto>> GetAllByUserId(int id){

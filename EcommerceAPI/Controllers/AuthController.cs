@@ -52,9 +52,20 @@ namespace EcommerceAPI.Controllers
                     ModelState.AddModelError("Error", "Credentials are incorrect");
                     return BadRequest(ModelState);
                 }
+
+                var userResponse = new UserLoginResponseDto
+                {
+                    Id = user.UserId,
+                    Name = user.Name,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = user.Roles.Select(p => p.Name).ToList()
+                };
                 string token = _authService.GenerateJwtToken(user);
 
-                return Ok(new LoginResponseDto { Token = token });
+                return Ok(new LoginResponseDto { Token = token, User = userResponse });
+
+                
             }
             catch (Exception ex)
             {
