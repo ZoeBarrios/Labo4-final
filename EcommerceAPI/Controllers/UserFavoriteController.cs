@@ -54,8 +54,9 @@ namespace EcommerceAPI.Controllers
             }
 
             var FavoriteCreated = await _userFavoriteService.Create(createUserFavoriteDto);
+            var favoritePublication = await _publicationService.GetById(createUserFavoriteDto.PublicationId);
 
-            return Created("FavoriteCreated", FavoriteCreated);
+            return Created("FavoriteCreated", favoritePublication);
 
         }
 
