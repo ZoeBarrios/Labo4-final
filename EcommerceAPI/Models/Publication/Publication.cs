@@ -27,7 +27,7 @@ namespace EcommerceAPI.Models.Publication
 
         public DateTime CreatedAt = DateTime.Now;
 
-        public bool IsPaused = false;
+        public bool IsPaused { get; set; } = false;
 
         [Required]
         public string ImageUrl { get; set; }

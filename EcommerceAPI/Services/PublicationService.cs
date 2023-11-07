@@ -24,7 +24,7 @@ namespace EcommerceAPI.Services
         public async Task<List<PublicationsDto>> GetAll(int page,int pageSize)
         {
             var lista = await _publicationRepository.GetPage(page, pageSize);
-            var filteredList = lista.Where(p => !p.IsPaused).ToList(); 
+            var filteredList = lista.Where(p => p.IsPaused==false).ToList(); 
             return _mapper.Map<List<PublicationsDto>>(filteredList);
         }
 

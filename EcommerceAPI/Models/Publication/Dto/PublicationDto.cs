@@ -15,9 +15,9 @@
 
         public DateTime CreatedAt { get; set; }
 
-        public bool IsPaused { get; }
+        public bool IsPaused { get; set; }
 
-        public string IMageUrl { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
  
         public int UserId { get; set; }
 

@@ -40,8 +40,8 @@ namespace EcommerceAPI.Controllers
             {
                 if (login.Email == null && login.UserName == null)
                 {
-                    ModelState.AddModelError("Error", "Credentials are incorrect");
-                    return BadRequest(ModelState);
+                   
+                    return BadRequest("Credentials are incorrect");
                 }
 
                 var user = await _userService.GetByUsernameOrEmail(login.UserName, login.Email);
@@ -49,8 +49,8 @@ namespace EcommerceAPI.Controllers
 
                 if (user == null || !_encoderService.Verify(login.Password, user.Password))
                 {
-                    ModelState.AddModelError("Error", "Credentials are incorrect");
-                    return BadRequest(ModelState);
+
+                    return BadRequest("Credentials are incorrect");
                 }
 
                 var userResponse = new UserLoginResponseDto
@@ -88,8 +88,8 @@ namespace EcommerceAPI.Controllers
 
                 if (user != null)
                 {
-                    ModelState.AddModelError("Error", "User already exists");
-                    return BadRequest(ModelState);
+                    
+                    return BadRequest("User already exists");
                 }
 
                 var userCreated = await _userService.Create(register);
