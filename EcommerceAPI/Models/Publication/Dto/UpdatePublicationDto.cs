@@ -17,6 +17,8 @@ namespace EcommerceAPI.Models.Publication.Dto
 
         public int? Stock { get; set; }
 
+        public bool? IsPaused { get; set; } 
+
        
     }
 }

@@ -104,6 +104,14 @@ namespace EcommerceAPI.Controllers
         [Authorize]
         public async Task<ActionResult<PublicationDto>> Put(int id, [FromBody] UpdatePublicationDto updatePublicationDto)
         {
+            if (updatePublicationDto.Stock != 0)
+            {
+                updatePublicationDto.IsPaused = false;
+            }
+            else
+            {
+                updatePublicationDto.IsPaused = true;
+            }
             
             try
             {

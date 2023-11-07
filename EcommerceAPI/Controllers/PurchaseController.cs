@@ -4,6 +4,7 @@ using EcommerceAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace EcommerceAPI.Controllers
 {
@@ -29,6 +30,7 @@ namespace EcommerceAPI.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<PublicationDto>> Post([FromBody] CreatePurchaseDto createPurchaseDto)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -37,13 +39,11 @@ namespace EcommerceAPI.Controllers
             var PurchaseCreated = await _purchaseService.Create(createPurchaseDto);
 
             var publications = await _publicationService.GetPublicationsByIds(createPurchaseDto.PublicationsIds);
+            var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.PurchaseId,publications);
 
             
-
-            var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.PurchaseId, publications);
-
-            return Created("PurchaseCreated", UpdatePurchase);
-
+             return Created("PurchaseCreated", UpdatePurchase);
+           
         }
 
         [HttpGet("user/{id}")]

@@ -14,11 +14,13 @@ namespace EcommerceAPI.Services
     public class PurchaseService
     {
         private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IPublicationRepository _publicationRepository;
         private readonly IMapper _mapper;
 
-        public PurchaseService(IPurchaseRepository purchaseRepository, IMapper mapper)
+        public PurchaseService(IPurchaseRepository purchaseRepository, IMapper mapper, IPublicationRepository publicationRepository)
         {
             _purchaseRepository = purchaseRepository;
+            _publicationRepository = publicationRepository;
             _mapper = mapper;
         }
 
@@ -61,6 +63,20 @@ namespace EcommerceAPI.Services
                 SellerId=createPurchaseDto.SellerId
             };
 
+            await Task.WhenAll(createPurchaseDto.PublicationsIds.Select(async id =>
+            {
+                Publication publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
+                if (publication.Stock == 1)
+                {
+                    publication.IsPaused = true;
+                    publication.Stock = 0;
+                }
+                else
+                {
+                    publication.Stock = publication.Stock - 1;
+                }
+                await _publicationRepository.Update(publication);
+            }));
             await _purchaseRepository.Add(purchase);
             return _mapper.Map<PurchaseDto>(purchase);
 
