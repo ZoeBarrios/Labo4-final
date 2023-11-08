@@ -11,6 +11,10 @@ namespace EcommerceAPI.Models.Purchase.Dto
         public int UserId { get; set; }
         public int SellerId { get; set; }
 
+        public bool WasDelivered { get; set; }
+
+
+        public decimal Amount { get; set; }
         public List<PublicationsDto> Publications { get; set; } = null!;
 
 

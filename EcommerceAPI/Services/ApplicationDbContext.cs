@@ -40,17 +40,17 @@ namespace EcommerceAPI.Services
                 new Role { RoleId = 3, Name = "Moderator" }
             );
             modelBuilder.Entity<Category>().HasData(
-                new Category { CategoryId = 1,Name="Electrónica"},
-                new Category { CategoryId = 2,Name="Electrodomésticos"},
-                new Category { CategoryId=3,Name="Moda"},
-                new Category { CategoryId = 4, Name = "Hogar y Jardín" },
-                new Category { CategoryId = 5, Name = "Deportes y Fitness" },
-                new Category { CategoryId = 6, Name = "Belleza y Cuidado Personal" },
-                new Category { CategoryId = 7, Name = "Juguetes y Niños" },
-                new Category { CategoryId = 8, Name = "Libros,Música y Películas" },
-                new Category { CategoryId = 9, Name = "Coleccionables" }
+                new Category { CategoryId = 1, Name = "Electronics" },
+                new Category { CategoryId = 2, Name = "Appliances" },
+                new Category { CategoryId = 3, Name = "Fashion" },
+                new Category { CategoryId = 4, Name = "Home and Garden" },
+                new Category { CategoryId = 5, Name = "Sports and Fitness" },
+                new Category { CategoryId = 6, Name = "Beauty and Personal Care" },
+                new Category { CategoryId = 7, Name = "Toys and Kids" },
+                new Category { CategoryId = 8, Name = "Books, Music, and Movies" },
+                new Category { CategoryId = 9, Name = "Collectibles" }
+               );
 
-            );
 
             modelBuilder.Entity<User>().HasMany(e => e.Roles).WithMany().UsingEntity<RoleUsers>(
                l => l.HasOne<Role>().WithMany().HasForeignKey(e => e.RoleId),

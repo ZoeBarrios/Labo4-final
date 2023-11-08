@@ -4,6 +4,7 @@ using EcommerceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231108154650_add-wasDelivered-purchase")]
+    partial class addwasDeliveredpurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,47 +48,47 @@ namespace EcommerceAPI.Migrations
                         new
                         {
                             CategoryId = 1,
-                            Name = "Electronics"
+                            Name = "Electrónica"
                         },
                         new
                         {
                             CategoryId = 2,
-                            Name = "Appliances"
+                            Name = "Electrodomésticos"
                         },
                         new
                         {
                             CategoryId = 3,
-                            Name = "Fashion"
+                            Name = "Moda"
                         },
                         new
                         {
                             CategoryId = 4,
-                            Name = "Home and Garden"
+                            Name = "Hogar y Jardín"
                         },
                         new
                         {
                             CategoryId = 5,
-                            Name = "Sports and Fitness"
+                            Name = "Deportes y Fitness"
                         },
                         new
                         {
                             CategoryId = 6,
-                            Name = "Beauty and Personal Care"
+                            Name = "Belleza y Cuidado Personal"
                         },
                         new
                         {
                             CategoryId = 7,
-                            Name = "Toys and Kids"
+                            Name = "Juguetes y Niños"
                         },
                         new
                         {
                             CategoryId = 8,
-                            Name = "Books, Music, and Movies"
+                            Name = "Libros,Música y Películas"
                         },
                         new
                         {
                             CategoryId = 9,
-                            Name = "Collectibles"
+                            Name = "Coleccionables"
                         });
                 });
 

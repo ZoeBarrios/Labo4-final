@@ -60,10 +60,10 @@ namespace EcommerceAPI.Services
             {
                 Amount = createPurchaseDto.Amount,
                 UserId = createPurchaseDto.UserId,
-                SellerId=createPurchaseDto.SellerId
+                SellerId = createPurchaseDto.SellerId
             };
 
-            await Task.WhenAll(createPurchaseDto.PublicationsIds.Select(async id =>
+            foreach (int id in createPurchaseDto.PublicationsIds)
             {
                 Publication publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
                 if (publication.Stock == 1)
@@ -76,11 +76,12 @@ namespace EcommerceAPI.Services
                     publication.Stock = publication.Stock - 1;
                 }
                 await _publicationRepository.Update(publication);
-            }));
+            }
+
             await _purchaseRepository.Add(purchase);
             return _mapper.Map<PurchaseDto>(purchase);
-
         }
+
 
         public async Task<PurchaseDto> UpdateById(int id, List<Publication> publications)
         {
@@ -96,6 +97,19 @@ namespace EcommerceAPI.Services
             return _mapper.Map<PurchaseDto>(await _purchaseRepository.Update(purchase));
         }
 
+        public async Task<PurchaseDto> UpdateWasDeliveredById(int id)
+        {
+            var purchase = await _purchaseRepository.GetOne(p => p.PurchaseId == id);
+
+            if (purchase == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+
+            purchase.WasDelivered = true;
+
+            return _mapper.Map<PurchaseDto>(await _purchaseRepository.Update(purchase));
+        }
 
 
     }

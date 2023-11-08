@@ -30,6 +30,8 @@ namespace EcommerceAPI.Models.Purchase
         [ForeignKey("SellerId")]
         public User.User Seller { get; set; } = null!;
 
+        public bool WasDelivered { get; set; } = false;
+
 
         public List<Publication.Publication> Publications { get; set; } = null!;
 

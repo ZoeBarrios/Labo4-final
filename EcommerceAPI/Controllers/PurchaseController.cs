@@ -1,4 +1,5 @@
 ﻿using EcommerceAPI.Models.Publication.Dto;
+using EcommerceAPI.Models.Purchase;
 using EcommerceAPI.Models.Purchase.Dto;
 using EcommerceAPI.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -71,6 +72,21 @@ namespace EcommerceAPI.Controllers
             try
             {
                 return Ok(await _purchaseService.GetOneById(id));
+            }
+            catch
+            {
+                return NotFound(new { message = $"No purchase with Id = {id}" });
+            }
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PurchaseDto>> UpdateDeliveredPurchase(int id)
+        {
+            try
+            {
+                return await _purchaseService.UpdateWasDeliveredById(id);
+
             }
             catch
             {

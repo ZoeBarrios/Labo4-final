@@ -17,6 +17,8 @@ namespace EcommerceAPI.Models.Purchase.Dto
 
         public int SellerId { get; set; }
 
+        public bool WasDelivered { get; set; }
+
         public List<PublicationsDto> Publications { get; set; } = null!;
 
     }
