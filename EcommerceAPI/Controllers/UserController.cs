@@ -58,10 +58,19 @@ namespace EcommerceAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            try
+            {
+                var userCreated = await _userService.Create(createUserDto);
+                return Created("CreateUser", userCreated);
+            }
+            catch(Exception e)
+            {
+                return Conflict("User Already Exist");
+            }
 
-            var userCreated = await _userService.Create(createUserDto);
+            
 
-            return Created("CreateUser", userCreated);
+            
 
         }
 

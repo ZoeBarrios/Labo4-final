@@ -72,6 +72,11 @@ namespace EcommerceAPI.Services
             var users = await _userRepo.GetAll();
             var usersFiltered = users.Where(u => u.IsActive == true && u.UserName==user.UserName);
 
+            if (usersFiltered.Count() > 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.Conflict);
+            }
+
             user.Password = _encoderService.Encode(user.Password);
 
             await _userRepo.Add(user);
