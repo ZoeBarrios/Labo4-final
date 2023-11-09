@@ -50,9 +50,19 @@ namespace EcommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var CommentCreated = await _commentsService.Create(createCommentDto);
+            try
+            {
+                var CommentCreated = await _commentsService.Create(createCommentDto);
+                return Created("CommentCreated", CommentCreated);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
-            return Created("CommentCreated", CommentCreated);
+
+
+           
 
         }
 

@@ -15,12 +15,14 @@ namespace EcommerceAPI.Services
     {
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IPublicationRepository _publicationRepository;
+        private readonly ApplicationDbContext _db;
         private readonly IMapper _mapper;
 
-        public PurchaseService(IPurchaseRepository purchaseRepository, IMapper mapper, IPublicationRepository publicationRepository)
+        public PurchaseService(IPurchaseRepository purchaseRepository, IMapper mapper, IPublicationRepository publicationRepository,ApplicationDbContext db)
         {
             _purchaseRepository = purchaseRepository;
             _publicationRepository = publicationRepository;
+            _db = db;
             _mapper = mapper;
         }
 
@@ -54,33 +56,57 @@ namespace EcommerceAPI.Services
             return _mapper.Map<PurchaseDto>(purchase);
         }
 
-        public async Task<PurchaseDto> Create(CreatePurchaseDto createPurchaseDto)
+        public async Task<PurchaseDto> Create(CreatePurchaseDto createPurchaseDto,List<Publication> publications)
         {
-            Purchase purchase = new Purchase()
+            using (var transaction = _db.Database.BeginTransaction())
             {
-                Amount = createPurchaseDto.Amount,
-                UserId = createPurchaseDto.UserId,
-                SellerId = createPurchaseDto.SellerId
-            };
+                try
+                {
+                   
+                    Purchase purchase = new Purchase()
+                    {
+                        Amount = createPurchaseDto.Amount,
+                        UserId = createPurchaseDto.UserId,
+                        SellerId = createPurchaseDto.SellerId,
+                        Publications=publications
+                    };
 
-            foreach (int id in createPurchaseDto.PublicationsIds)
-            {
-                Publication publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
-                if (publication.Stock == 1)
-                {
-                    publication.IsPaused = true;
-                    publication.Stock = 0;
+                   
+
+                    
+                    foreach (int id in createPurchaseDto.PublicationsIds)
+                    {
+                        Publication publication = await _publicationRepository.GetOne(p => p.PublicationId == id);
+                        if (publication.Stock == 1)
+                        {
+                            publication.IsPaused = true;
+                            publication.Stock = 0;
+                        }
+                        else
+                        {
+                            publication.Stock = publication.Stock - 1;
+                        }
+                        await _publicationRepository.Update(publication);
+                    }
+
+                    
+                    await _purchaseRepository.Add(purchase);
+
+                    
+                    transaction.Commit();
+
+                    return _mapper.Map<PurchaseDto>(purchase);
                 }
-                else
+                catch (Exception ex)
                 {
-                    publication.Stock = publication.Stock - 1;
+                    
+                    transaction.Rollback();
+
+                    throw new Exception(ex.Message);
                 }
-                await _publicationRepository.Update(publication);
             }
-
-            await _purchaseRepository.Add(purchase);
-            return _mapper.Map<PurchaseDto>(purchase);
         }
+
 
 
         public async Task<PurchaseDto> UpdateById(int id, List<Publication> publications)

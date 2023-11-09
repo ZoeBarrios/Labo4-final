@@ -94,9 +94,17 @@ namespace EcommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var categoryCreated = await _categoryService.Create(categoryDto);
+            try
+            {
+                var categoryCreated = await _categoryService.Create(categoryDto);
 
-            return Created("CategoryCreated", categoryCreated);
+                return Created("CategoryCreated", categoryCreated);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            
         }
 
 

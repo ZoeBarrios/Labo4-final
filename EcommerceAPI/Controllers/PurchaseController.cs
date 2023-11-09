@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace EcommerceAPI.Controllers
     {
         private readonly PurchaseService _purchaseService;
         private readonly PublicationService _publicationService;
+
 
         public PurchaseController(PurchaseService purchaseService, PublicationService publicationService)
         {
@@ -37,13 +39,15 @@ namespace EcommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var PurchaseCreated = await _purchaseService.Create(createPurchaseDto);
-
-            var publications = await _publicationService.GetPublicationsByIds(createPurchaseDto.PublicationsIds);
-            var UpdatePurchase = await _purchaseService.UpdateById(PurchaseCreated.PurchaseId,publications);
-
-            
-             return Created("PurchaseCreated", UpdatePurchase);
+            try
+            {
+                var publications = await _publicationService.GetPublicationsByIds(createPurchaseDto.PublicationsIds);
+                var purchase = await _purchaseService.Create(createPurchaseDto, publications);
+                return Created("PurchaseCreated",purchase);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
            
         }
 

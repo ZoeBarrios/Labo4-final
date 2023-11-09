@@ -88,11 +88,19 @@ namespace EcommerceAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            try
+            {
+                var publicationCreated = await _publicationService.Create(createPublicationDto);
+                return Created("PublicationCreated", publicationCreated);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
            
-            var publicationCreated = await _publicationService.Create(createPublicationDto);
 
-            return Created("PublicationCreated", publicationCreated);
+
+            
         }
 
 

@@ -53,10 +53,17 @@ namespace EcommerceAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var FavoriteCreated = await _userFavoriteService.Create(createUserFavoriteDto);
-            var favoritePublication = await _publicationService.GetById(createUserFavoriteDto.PublicationId);
+            try
+            {
+                var FavoriteCreated = await _userFavoriteService.Create(createUserFavoriteDto);
+                var favoritePublication = await _publicationService.GetById(createUserFavoriteDto.PublicationId);
 
-            return Created("FavoriteCreated", favoritePublication);
+                return Created("FavoriteCreated", favoritePublication);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
 
         }
 
