@@ -58,6 +58,10 @@ namespace EcommerceAPI.Services
 
         public async Task<PurchaseDto> Create(CreatePurchaseDto createPurchaseDto,List<Publication> publications)
         {
+            if (createPurchaseDto.SellerId == createPurchaseDto.UserId)
+            {
+                throw new Exception("You can't buy to yourself");
+            }
             using (var transaction = _db.Database.BeginTransaction())
             {
                 try
